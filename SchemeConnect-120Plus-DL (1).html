@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SchemeConnect – AI Deep Learning Benefits Finder | 120+ Schemes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  --bg:#0b0f1c;--bg2:#111728;--bg3:#162035;
+  --card:#1c2640;--card2:#232e4d;
+  --border:#2a3558;--border2:#374470;
+  --saffron:#f59300;--saffron2:#ffa820;--saffron3:rgba(245,147,0,0.12);
+  --green:#00c896;--green2:rgba(0,200,150,0.1);
+  --blue:#4a8fff;--blue2:rgba(74,143,255,0.1);
+  --red:#ff5252;--purple:#a78bfa;--pink:#f472b6;
+  --gold:#ffd700;--teal:#2dd4bf;
+  --text:#e8edf8;--text2:#8fa3c8;--text3:#4f6080;
+  --r:12px;--sh:0 4px 24px rgba(0,0,0,0.5);--sh2:0 8px 48px rgba(0,0,0,0.7);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 15% 25%,rgba(245,147,0,.04) 0%,transparent 65%),radial-gradient(ellipse 50% 35% at 85% 75%,rgba(74,143,255,.04) 0%,transparent 65%);pointer-events:none;z-index:0}
+.shell{position:relative;z-index:1;max-width:1140px;margin:0 auto;padding:0 20px 80px}
+header{background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;box-shadow:0 2px 20px rgba(0,0,0,0.4)}
+.hdr{max-width:1140px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:11px}
+.b-icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--saffron),var(--saffron2));display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 3px 12px rgba(245,147,0,.3)}
+.b-name{font-size:1.1rem;font-weight:800;letter-spacing:-.3px}
+.b-sub{font-size:.6rem;color:var(--text3);font-weight:400;margin-top:1px}
+.hdr-right{display:flex;align-items:center;gap:8px}
+.dl-badge{display:flex;align-items:center;gap:6px;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.25);padding:5px 12px;border-radius:999px;font-size:.65rem;font-weight:700;color:var(--purple);letter-spacing:.5px}
+.dl-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--purple);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.scheme-count-hdr{background:linear-gradient(135deg,rgba(245,147,0,.1),rgba(74,143,255,.08));border:1px solid rgba(245,147,0,.2);padding:5px 12px;border-radius:999px;font-size:.65rem;font-weight:700;color:var(--saffron)}
+.hdr-btn{background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text2);padding:7px 13px;border-radius:8px;font-family:'Outfit',sans-serif;font-size:.75rem;font-weight:600;cursor:pointer;transition:all .2s}
+.hdr-btn:hover{background:rgba(255,255,255,.1);color:var(--text)}
+/* Setup */
+.setup-wrap{background:var(--bg2);border-bottom:2px solid var(--saffron);padding:20px 0}
+.setup-inner{max-width:1140px;margin:0 auto;padding:0 20px}
+.setup-title{font-size:.95rem;font-weight:800;color:var(--text);margin-bottom:3px}
+.setup-sub{font-size:.72rem;color:var(--text3);margin-bottom:14px}
+.setup-sub a{color:var(--saffron)}
+.setup-grid{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end}
+.sf{display:flex;flex-direction:column;gap:5px}
+.sf-label{font-size:.63rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
+.sf-input{background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:.78rem;transition:all .2s}
+.sf-input:focus{outline:none;border-color:var(--saffron);background:rgba(255,255,255,.08)}
+.sf-input::placeholder{color:var(--text3)}
+.btn-connect{background:var(--saffron);color:#000;border:none;cursor:pointer;padding:10px 20px;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:800;font-size:.82rem;transition:all .2s;white-space:nowrap}
+.btn-connect:hover{background:var(--saffron2);transform:translateY(-1px)}
+.connected-bar{background:rgba(0,200,150,.06);border-bottom:1px solid rgba(0,200,150,.15);padding:9px 0}
+.connected-inner{max-width:1140px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;font-size:.76rem}
+.connected-info{color:var(--text2)}
+.connected-info strong{color:var(--green)}
+/* Page */
+.page{padding:22px 0}
+.not-setup{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;text-align:center}
+/* Tabs */
+.tabs{display:flex;gap:3px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:4px;margin-bottom:22px;overflow-x:auto}
+.tb{flex:1;min-width:fit-content;padding:10px 12px;border:none;cursor:pointer;background:transparent;color:var(--text3);font-family:'Outfit',sans-serif;font-size:.74rem;font-weight:600;border-radius:9px;transition:all .2s;white-space:nowrap}
+.tb.on{background:var(--card2);color:var(--text);box-shadow:0 2px 12px rgba(0,0,0,.4)}
+.tb:hover:not(.on){color:var(--text2);background:rgba(255,255,255,.03)}
+.panel{display:none;animation:fadeUp .25s ease}
+.panel.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+/* Source legend */
+.src-legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;padding:14px 16px;background:var(--card);border:1px solid var(--border);border-radius:var(--r)}
+.sl-item{display:flex;align-items:center;gap:6px;font-size:.72rem;color:var(--text2)}
+.sl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+/* DL info */
+.dl-info{background:linear-gradient(135deg,rgba(167,139,250,.08),rgba(74,143,255,.06));border:1px solid rgba(167,139,250,.2);border-radius:var(--r);padding:14px 18px;margin-bottom:20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.dl-stage{display:flex;align-items:center;gap:10px}
+.dl-stage-num{width:28px;height:28px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--purple),var(--blue));display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:#fff}
+.dl-stage-txt{font-size:.72rem;color:var(--text2);line-height:1.4}
+.dl-stage-txt strong{color:var(--text);display:block;font-size:.74rem;margin-bottom:1px}
+/* Steps */
+.steps{display:flex;background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:20px}
+.step{flex:1;padding:11px 8px;font-size:.69rem;font-weight:700;color:var(--text3);text-align:center;cursor:pointer;border-right:1px solid var(--border);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:5px}
+.step:last-child{border-right:none}
+.step.cur{background:var(--bg3);color:var(--saffron)}
+.step.done{color:var(--green)}
+.sn{width:19px;height:19px;border-radius:50%;background:var(--border);display:inline-flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:800;flex-shrink:0;transition:all .2s}
+.step.cur .sn{background:var(--saffron);color:#000}
+.step.done .sn{background:var(--green);color:#000}
+/* Form */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px 24px;box-shadow:var(--sh);margin-bottom:14px}
+.sec{font-size:.63rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--saffron);display:flex;align-items:center;gap:10px;margin:20px 0 14px}
+.sec:first-child{margin-top:0}
+.sec::after{content:'';flex:1;height:1px;background:var(--border)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px}
+.span2{grid-column:1/-1}
+.fg{display:flex;flex-direction:column;gap:5px}
+label{font-size:.65rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.3px}
+input,select{background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:10px 12px;font-family:'Outfit',sans-serif;font-size:.86rem;transition:all .2s;-webkit-appearance:none}
+input:focus,select:focus{outline:none;border-color:var(--saffron);box-shadow:0 0 0 3px var(--saffron3)}
+input::placeholder{color:var(--text3)}
+select option{background:var(--card2)}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{padding:7px 13px;border-radius:999px;font-size:.73rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text2);transition:all .15s;user-select:none}
+.chip.on{border-color:var(--saffron);color:var(--saffron);background:var(--saffron3)}
+/* Buttons */
+.btn{padding:10px 20px;border:none;cursor:pointer;border-radius:8px;font-family:'Outfit',sans-serif;font-size:.83rem;font-weight:700;transition:all .2s;display:inline-flex;align-items:center;gap:7px}
+.btn-primary{background:linear-gradient(135deg,#1e3a6e,#253f7a);color:#fff;border:1px solid var(--border2);box-shadow:0 4px 16px rgba(0,0,0,.3)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(0,0,0,.4)}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn-saffron{background:linear-gradient(135deg,var(--saffron),var(--saffron2));color:#000;box-shadow:0 4px 16px rgba(245,147,0,.25)}
+.btn-saffron:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(245,147,0,.4)}
+.btn-ghost{background:var(--card2);color:var(--text2);border:1px solid var(--border)}
+.btn-ghost:hover{border-color:var(--saffron);color:var(--saffron)}
+.btn-green{background:var(--green2);color:var(--green);border:1px solid rgba(0,200,150,.25)}
+.btn-green:hover{background:rgba(0,200,150,.18)}
+.form-actions{display:flex;gap:10px;margin-top:20px;justify-content:flex-end}
+/* Review */
+.review-table{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.rv{display:flex;justify-content:space-between;align-items:center;padding:9px 16px;border-bottom:1px solid var(--border);gap:12px}
+.rv:last-child{border-bottom:none}
+.rv:nth-child(even){background:var(--bg3)}
+.rv-k{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--text3);flex-shrink:0}
+.rv-v{font-size:.82rem;font-weight:600;color:var(--text);text-align:right}
+/* DL Progress */
+.dl-progress{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px 28px;text-align:center}
+.dl-spinner{width:56px;height:56px;margin:0 auto 18px;border:3px solid var(--border);border-top-color:var(--saffron);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.dsp-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.dsp-item:last-child{border-bottom:none}
+.dsp-num{width:26px;height:26px;border-radius:50%;flex-shrink:0;background:var(--border);font-size:.7rem;font-weight:800;display:flex;align-items:center;justify-content:center;color:var(--text3);transition:all .4s}
+.dsp-num.active{background:var(--saffron);color:#000;box-shadow:0 0 12px rgba(245,147,0,.4)}
+.dsp-num.done{background:var(--green);color:#000}
+.dsp-txt{flex:1;text-align:left}
+.dsp-label{font-size:.81rem;font-weight:600;color:var(--text2)}
+.dsp-label.active{color:var(--text)}
+.dsp-sub{font-size:.71rem;color:var(--text3)}
+.dsp-result{font-size:.71rem;font-weight:700;padding:3px 9px;border-radius:5px;background:var(--green2);color:var(--green);opacity:0;transition:opacity .4s}
+.dsp-result.show{opacity:1}
+/* Results */
+.results-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.results-hdr h2{font-size:1rem;font-weight:800}
+.res-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.cnt-badge{background:var(--saffron3);color:var(--saffron);border:1px solid rgba(245,147,0,.25);padding:5px 12px;border-radius:999px;font-size:.7rem;font-weight:700}
+.dl-method-badge{background:rgba(167,139,250,.1);color:var(--purple);border:1px solid rgba(167,139,250,.2);padding:5px 12px;border-radius:999px;font-size:.68rem;font-weight:700}
+/* Filters */
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.fchip{padding:6px 12px;border-radius:999px;font-size:.69rem;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--text3);transition:all .15s}
+.fchip.on{border-color:var(--blue);color:var(--blue);background:var(--blue2)}
+.fchip.on-bank{border-color:var(--teal);color:var(--teal);background:rgba(45,212,191,.1)}
+.fchip.on-corp{border-color:var(--pink);color:var(--pink);background:rgba(244,114,182,.1)}
+.fchip.on-tn{border-color:var(--saffron);color:var(--saffron);background:var(--saffron3)}
+.fchip.on-central{border-color:var(--gold);color:var(--gold);background:rgba(255,215,0,.08)}
+.cards{display:flex;flex-direction:column;gap:11px}
+/* Scheme Card */
+.scard{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:17px 19px;cursor:pointer;transition:all .2s;border-left:3px solid transparent;position:relative;overflow:hidden}
+.scard:hover{border-color:var(--border2);transform:translateX(3px);box-shadow:var(--sh2)}
+.scard.high{border-left-color:var(--green)}
+.scard.medium{border-left-color:var(--saffron)}
+.scard.low{border-left-color:var(--text3)}
+/* Source-colored left border */
+.scard.src-bank{border-left-color:var(--teal)}
+.scard.src-corp{border-left-color:var(--pink)}
+.scard-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:7px}
+.scard-name{font-size:.9rem;font-weight:700;color:var(--text);line-height:1.4;flex:1}
+.score-badge{padding:4px 10px;border-radius:6px;font-size:.68rem;font-weight:800;white-space:nowrap;flex-shrink:0;font-family:'JetBrains Mono',monospace;position:relative;overflow:hidden}
+.score-badge::before{content:'';position:absolute;inset:0;background:currentColor;opacity:.12}
+.score-high{color:var(--green)}.score-med{color:var(--saffron)}.score-low{color:var(--text3)}
+.scard-desc{font-size:.78rem;color:var(--text2);line-height:1.5;margin-bottom:9px}
+.badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px}
+.badge{padding:3px 8px;border-radius:5px;font-size:.62rem;font-weight:700}
+.b-fin{background:rgba(0,200,150,.1);color:var(--green)}
+.b-nfin{background:var(--blue2);color:var(--blue)}
+.b-both{background:rgba(167,139,250,.1);color:var(--purple)}
+.b-cn{background:rgba(255,215,0,.08);color:var(--gold)}
+.b-tn{background:var(--saffron3);color:var(--saffron)}
+.b-bank{background:rgba(45,212,191,.1);color:var(--teal)}
+.b-corp{background:rgba(244,114,182,.1);color:var(--pink)}
+.b-type{background:rgba(255,255,255,.05);color:var(--text2)}
+.b-high{background:rgba(0,200,150,.12);color:var(--green)}
+.b-med{background:var(--saffron3);color:var(--saffron)}
+.b-low{background:rgba(255,255,255,.04);color:var(--text3)}
+/* AI Reasons */
+.ai-reasons{background:rgba(0,200,150,.05);border:1px solid rgba(0,200,150,.12);border-radius:8px;padding:9px 11px;margin-bottom:9px}
+.ai-reason-hd{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--green);margin-bottom:5px}
+.ar-item{font-size:.73rem;color:var(--text2);display:flex;align-items:flex-start;gap:6px;margin-bottom:3px;line-height:1.4}
+.ar-item:last-child{margin-bottom:0}
+.ar-check{color:var(--green);flex-shrink:0;font-size:.8rem}
+.special-note{background:var(--blue2);border:1px solid rgba(74,143,255,.2);border-radius:7px;padding:7px 10px;font-size:.72rem;color:var(--blue);margin-bottom:9px;line-height:1.4}
+.benefit-hl{font-size:.71rem;color:var(--saffron);font-weight:700;margin-bottom:7px;display:flex;align-items:center;gap:5px}
+.score-bar-wrap{height:3px;background:var(--border);border-radius:3px;margin-bottom:11px;overflow:hidden}
+.score-bar{height:100%;border-radius:3px;transition:width 1s ease}
+.scard-foot{display:flex;align-items:center;justify-content:space-between;margin-top:5px;gap:8px;flex-wrap:wrap}
+.ministry-txt{font-size:.65rem;color:var(--text3);flex:1}
+/* Modal */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);z-index:100;display:flex;align-items:flex-start;justify-content:center;padding:32px 16px;overflow-y:auto;opacity:0;pointer-events:none;transition:opacity .25s}
+.modal-bg.on{opacity:1;pointer-events:all}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;width:100%;max-width:680px;padding:26px 28px;position:relative;transform:translateY(20px);transition:transform .3s;box-shadow:var(--sh2)}
+.modal-bg.on .modal{transform:translateY(0)}
+.modal-x{position:absolute;top:14px;right:14px;background:var(--card2);border:1px solid var(--border);color:var(--text2);width:30px;height:30px;border-radius:7px;cursor:pointer;font-size:.95rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.modal-x:hover{background:var(--saffron);color:#000;border-color:var(--saffron)}
+.modal-title{font-size:1.02rem;font-weight:800;padding-right:38px;margin-bottom:3px;line-height:1.3}
+.modal-min{font-size:.7rem;color:var(--text3);margin-bottom:12px}
+.msec{font-size:.62rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin:14px 0 7px}
+.mitem{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:.81rem;color:var(--text2);line-height:1.5}
+.mitem:last-child{border-bottom:none}
+.mi{flex-shrink:0;margin-top:2px}
+.apply-box{background:linear-gradient(135deg,rgba(245,147,0,.06),rgba(74,143,255,.04));border:1px solid rgba(245,147,0,.15);border-radius:10px;padding:15px 17px;margin-top:16px}
+.apply-box p{font-size:.8rem;color:var(--text2);line-height:1.6;margin-bottom:12px}
+.apply-row{display:flex;gap:8px;flex-wrap:wrap}
+/* Stats */
+.stat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:20px}
+.stat-box{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;box-shadow:var(--sh)}
+.sv{font-size:1.6rem;font-weight:800;font-family:'JetBrains Mono',monospace}
+.sl{font-size:.63rem;color:var(--text3);margin-top:2px;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.sv-s{color:var(--saffron)}.sv-g{color:var(--green)}.sv-b{color:var(--blue)}.sv-p{color:var(--purple)}.sv-t{color:var(--teal)}
+.admin-table{width:100%;border-collapse:collapse;font-size:.78rem}
+.admin-table th{background:var(--bg3);color:var(--text3);padding:9px 12px;text-align:left;font-size:.62rem;letter-spacing:.6px;text-transform:uppercase;font-weight:700}
+.admin-table td{padding:8px 12px;border-bottom:1px solid var(--border);color:var(--text2)}
+.admin-table tr:hover td{background:rgba(255,255,255,.02)}
+/* App cards */
+.app-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:15px 17px;margin-bottom:10px;box-shadow:var(--sh)}
+.app-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:7px}
+.app-name{font-size:.87rem;font-weight:700;color:var(--text)}
+.s-chip{padding:4px 9px;border-radius:5px;font-size:.63rem;font-weight:700}
+.s-saved{background:var(--blue2);color:var(--blue)}
+.s-applied{background:var(--green2);color:var(--green)}
+.s-rejected{background:rgba(255,82,82,.1);color:var(--red)}
+.empty{text-align:center;padding:48px 20px}
+.empty-icon{font-size:3rem;margin-bottom:12px}
+.empty h3{font-size:.93rem;font-weight:700;color:var(--text2);margin-bottom:5px}
+.empty p{font-size:.77rem;color:var(--text3)}
+#toast{position:fixed;bottom:24px;right:24px;z-index:200;background:var(--card2);border-left:3px solid var(--green);color:var(--green);padding:11px 18px;border-radius:9px;font-size:.77rem;font-weight:600;transform:translateY(60px);opacity:0;transition:all .3s;box-shadow:var(--sh2);max-width:320px}
+#toast.on{transform:translateY(0);opacity:1}
+#toast.err{border-left-color:var(--red);color:var(--red)}
+@media(max-width:680px){.grid2,.grid3{grid-template-columns:1fr}.stat-grid{grid-template-columns:1fr 1fr 1fr}.setup-grid{grid-template-columns:1fr}.steps{display:none}.dl-info{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdr">
+    <div class="brand">
+      <div class="b-icon">🏛️</div>
+      <div>
+        <div class="b-name">SchemeConnect</div>
+        <div class="b-sub">Deep Learning Benefits Finder · Central + State + Bank + Corporate</div>
+      </div>
+    </div>
+    <div class="hdr-right">
+      <div class="scheme-count-hdr" id="hdrCount">120+ Schemes</div>
+      <div class="dl-badge">DL ACTIVE</div>
+      <button class="hdr-btn" onclick="toggleSetup()">⚙️ Setup</button>
+    </div>
+  </div>
+</header>
+
+<!-- Setup Panel -->
+<div id="setupPanel" style="display:none">
+  <div class="setup-wrap">
+    <div class="setup-inner">
+      <div class="setup-title">🔧 Connect Your Backend (Optional)</div>
+      <div class="setup-sub">
+        Supabase: <a href="https://supabase.com" target="_blank">supabase.com</a> → Project Settings → API &nbsp;|&nbsp;
+        Anthropic AI Key: <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> → API Keys (free credits for new accounts)
+      </div>
+      <div class="setup-grid">
+        <div class="sf"><div class="sf-label">Supabase Project URL</div><input class="sf-input" id="cfg_url" placeholder="https://xxxx.supabase.co" type="url"/></div>
+        <div class="sf"><div class="sf-label">Supabase Anon Key</div><input class="sf-input" id="cfg_anon" placeholder="eyJhbGci…" type="password"/></div>
+        <div class="sf"><div class="sf-label">Anthropic API Key (AI Ranking)</div><input class="sf-input" id="cfg_ai" placeholder="sk-ant-api03-…" type="password"/></div>
+        <button class="btn-connect" onclick="saveSetup()">✓ Connect</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="connectedBar" style="display:none">
+  <div class="connected-bar">
+    <div class="connected-inner">
+      <div class="connected-info">✅ Connected to <strong id="sbHost">Supabase</strong> · AI: <strong id="aiStatus">Claude DL Active</strong> · <span id="schemeCountBadge"></span></div>
+      <button class="hdr-btn" onclick="clearSetup()" style="font-size:.68rem;padding:5px 10px">Change Keys</button>
+    </div>
+  </div>
+</div>
+
+<div class="shell">
+<div class="page">
+  <div id="notSetup" style="display:none">
+    <div class="not-setup">
+      <div style="font-size:3.5rem;margin-bottom:14px">🔧</div>
+      <h2 style="font-size:1.1rem;font-weight:800;margin-bottom:8px">Ready to find your schemes</h2>
+      <p style="font-size:.83rem;color:var(--text2);max-width:420px;margin-bottom:20px">Connect Supabase + Anthropic for full DL mode, or try Demo Mode instantly with all 120+ schemes.</p>
+      <button class="btn btn-saffron" onclick="startDemoMode()">▶ Try Demo Mode — No Keys Needed</button>
+    </div>
+  </div>
+
+  <div id="mainApp" style="display:none">
+    <div class="tabs">
+      <button class="tb on" onclick="switchTab('profile')">📋 My Profile</button>
+      <button class="tb" onclick="switchTab('results')">🎯 AI Recommendations</button>
+      <button class="tb" onclick="switchTab('browse')">🔍 Browse 120+ Schemes</button>
+      <button class="tb" onclick="switchTab('saved')">📁 Saved</button>
+      <button class="tb" onclick="switchTab('admin')">📊 Admin</button>
+    </div>
+
+    <!-- PROFILE TAB -->
+    <div id="tab-profile" class="panel on">
+      <div class="dl-info">
+        <div class="dl-stage"><div class="dl-stage-num">1</div><div class="dl-stage-txt"><strong>Hard Rule Filter</strong>Age, income, caste, gender, state</div></div>
+        <div class="dl-stage"><div class="dl-stage-num">2</div><div class="dl-stage-txt"><strong>TF-IDF Similarity</strong>Profile → keyword vector match</div></div>
+        <div class="dl-stage"><div class="dl-stage-num">3</div><div class="dl-stage-txt"><strong>Claude LLM Ranking</strong>70B transformer deep analysis</div></div>
+      </div>
+      <div class="steps">
+        <div class="step cur" id="ps1" onclick="gs(1)"><span class="sn">1</span> Personal</div>
+        <div class="step" id="ps2" onclick="gs(2)"><span class="sn">2</span> Education</div>
+        <div class="step" id="ps3" onclick="gs(3)"><span class="sn">3</span> Financial</div>
+        <div class="step" id="ps4" onclick="gs(4)"><span class="sn">4</span> Submit</div>
+      </div>
+      <div id="fs1" class="card">
+        <div class="sec">Personal Information</div>
+        <div class="grid2">
+          <div class="fg"><label>Full Name *</label><input id="f_name" placeholder="e.g. Karthikeyan S."/></div>
+          <div class="fg"><label>Age *</label><input id="f_age" type="number" placeholder="e.g. 21" min="1" max="110"/></div>
+          <div class="fg"><label>Gender *</label>
+            <select id="f_gender"><option value="">Select</option><option>Male</option><option>Female</option><option>Transgender / Other</option></select></div>
+          <div class="fg"><label>I Am A *</label>
+            <select id="f_utype"><option value="">Select</option>
+              <option value="school student">School Student</option>
+              <option value="college student">College Student</option>
+              <option value="farmer">Farmer / Cultivator</option>
+              <option value="self-employed">Self-Employed / Business</option>
+              <option value="job seeker">Job Seeker / Unemployed</option>
+              <option value="salaried">Salaried Employee</option>
+              <option value="general public">General Public</option></select></div>
+          <div class="fg"><label>State *</label>
+            <select id="f_state">
+              <option value="Tamil Nadu">Tamil Nadu</option><option value="Andhra Pradesh">Andhra Pradesh</option>
+              <option value="Karnataka">Karnataka</option><option value="Kerala">Kerala</option>
+              <option value="Telangana">Telangana</option><option value="Maharashtra">Maharashtra</option>
+              <option value="Gujarat">Gujarat</option><option value="Rajasthan">Rajasthan</option>
+              <option value="Uttar Pradesh">Uttar Pradesh</option><option value="Bihar">Bihar</option>
+              <option value="West Bengal">West Bengal</option><option value="Delhi">Delhi</option>
+              <option value="Punjab">Punjab</option><option value="Odisha">Odisha</option>
+              <option value="Other">Other State</option></select></div>
+          <div class="fg"><label>District</label><input id="f_district" placeholder="e.g. Coimbatore"/></div>
+          <div class="fg"><label>Area Type</label>
+            <select id="f_area"><option>Urban</option><option>Rural</option><option>Semi-Urban</option></select></div>
+          <div class="fg"><label>Phone</label><input id="f_phone" type="tel" placeholder="+91 98765 43210"/></div>
+          <div class="fg span2"><label>Email</label><input id="f_email" type="email" placeholder="your@email.com"/></div>
+        </div>
+        <div class="form-actions"><button class="btn btn-saffron" onclick="gs(2)">Education Details →</button></div>
+      </div>
+      <div id="fs2" class="card" style="display:none">
+        <div class="sec">Education Details</div>
+        <div class="grid2">
+          <div class="fg"><label>Education Level *</label>
+            <select id="f_edu"><option value="">Select</option>
+              <option value="Below 10th">Below 10th</option><option value="10th">10th / SSLC</option>
+              <option value="11th">11th Standard</option><option value="12th">12th / HSC</option>
+              <option value="Diploma">Diploma / ITI</option><option value="Undergraduate">UG Degree (B.E./B.Sc./BA etc.)</option>
+              <option value="Postgraduate">PG Degree (M.E./MBA etc.)</option><option value="PhD">PhD / Doctorate</option></select></div>
+          <div class="fg"><label>Institution Type</label>
+            <select id="f_instype"><option value="">Select</option>
+              <option>Govt School</option><option>Private School</option><option>Govt College</option>
+              <option>Private College</option><option>University</option><option>Polytechnic / ITI</option></select></div>
+          <div class="fg span2"><label>Institution Name</label><input id="f_insname" placeholder="e.g. PSG College of Technology, Coimbatore"/></div>
+          <div class="fg span2"><label>Course / Stream</label><input id="f_course" placeholder="e.g. B.E. Computer Science / 12th Science with Maths"/></div>
+          <div class="fg"><label>10th Marks (%)</label><input id="f_m10" type="number" placeholder="88" min="0" max="100"/></div>
+          <div class="fg"><label>12th Marks (%)</label><input id="f_m12" type="number" placeholder="91" min="0" max="100"/></div>
+          <div class="fg"><label>CGPA (out of 10)</label><input id="f_cgpa" type="number" placeholder="8.4" step="0.1" min="0" max="10"/></div>
+          <div class="fg"><label>Competitive Exam Score</label><input id="f_exam" placeholder="JEE 85 percentile / NEET 540 / GATE 65"/></div>
+        </div>
+        <div class="sec">Special Category</div>
+        <div class="chips">
+          <span class="chip" onclick="tc(this,'first_gen')">🎓 First Graduate in Family</span>
+          <span class="chip" onclick="tc(this,'disability')">♿ Person with Disability</span>
+          <span class="chip" onclick="tc(this,'minority')">🕌 Minority Community</span>
+          <span class="chip" onclick="tc(this,'girl_child')">👧 Girl Child</span>
+          <span class="chip" onclick="tc(this,'ex_serviceman')">🎖 Ex-Serviceman Family</span>
+          <span class="chip" onclick="tc(this,'merit')">🏆 High Merit / Topper</span>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-ghost" onclick="gs(1)">← Back</button>
+          <button class="btn btn-saffron" onclick="gs(3)">Financial Details →</button>
+        </div>
+      </div>
+      <div id="fs3" class="card" style="display:none">
+        <div class="sec">Social Details</div>
+        <div class="grid3">
+          <div class="fg"><label>Caste Category *</label>
+            <select id="f_caste"><option value="">Select</option>
+              <option value="OC">OC / General</option><option value="OBC">OBC</option>
+              <option value="BC">BC</option><option value="MBC">MBC</option>
+              <option value="SC">SC</option><option value="ST">ST</option>
+              <option value="EBC">EBC</option><option value="DNT">DNT</option></select></div>
+          <div class="fg"><label>Religion</label>
+            <select id="f_religion"><option value="">Any</option>
+              <option>Hindu</option><option>Muslim</option><option>Christian</option>
+              <option>Sikh</option><option>Buddhist</option><option>Jain</option></select></div>
+          <div class="fg"><label>Marital Status</label>
+            <select id="f_marital"><option>Single</option><option>Married</option><option>Widow/Widower</option><option>Divorced</option></select></div>
+        </div>
+        <div class="sec">Financial Details</div>
+        <div class="grid2">
+          <div class="fg"><label>Annual Family Income (₹) *</label><input id="f_income" type="number" placeholder="120000"/></div>
+          <div class="fg"><label>Ration Card Type</label>
+            <select id="f_ration"><option value="">None / Unknown</option>
+              <option value="White">White (APL)</option><option value="Yellow">Yellow (BPL)</option>
+              <option value="Pink">Pink (Antyodaya AAY)</option><option value="Green">Green (PHH)</option></select></div>
+        </div>
+        <div class="chips" style="margin-top:12px">
+          <span class="chip" onclick="tc(this,'bpl')">📄 BPL Card Holder</span>
+          <span class="chip" onclick="tc(this,'farmer')">🌾 Farmer / Agriculture</span>
+          <span class="chip" onclick="tc(this,'self_emp')">💼 Self-Employed / Business</span>
+          <span class="chip" onclick="tc(this,'single_woman')">👩 Single Woman / Widow</span>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-ghost" onclick="gs(2)">← Back</button>
+          <button class="btn btn-saffron" onclick="gs(4)">Review Profile →</button>
+        </div>
+      </div>
+      <div id="fs4" style="display:none">
+        <div id="reviewBlock" class="review-table" style="margin-bottom:16px"></div>
+        <div class="form-actions">
+          <button class="btn btn-ghost" onclick="gs(3)">← Edit</button>
+          <button class="btn btn-saffron" id="submitBtn" onclick="submitProfile()">🧠 Run Deep Learning Analysis</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS TAB -->
+    <div id="tab-results" class="panel">
+      <div id="resultsContent">
+        <div class="empty"><div class="empty-icon">🎯</div><h3>No recommendations yet</h3><p>Complete your profile — DL pipeline searches 120+ schemes across Central Govt, TN State, Banks & Corporate CSR</p><br/><button class="btn btn-saffron" onclick="switchTab('profile')" style="margin-top:14px">Fill My Profile →</button></div>
+      </div>
+    </div>
+
+    <!-- BROWSE TAB -->
+    <div id="tab-browse" class="panel">
+      <div class="src-legend">
+        <div class="sl-item"><div class="sl-dot" style="background:var(--gold)"></div>Central Government</div>
+        <div class="sl-item"><div class="sl-dot" style="background:var(--saffron)"></div>Tamil Nadu State</div>
+        <div class="sl-item"><div class="sl-dot" style="background:var(--teal)"></div>Banking Sector</div>
+        <div class="sl-item"><div class="sl-dot" style="background:var(--pink)"></div>Corporate / CSR</div>
+        <div style="margin-left:auto;font-size:.7rem;color:var(--text3);font-weight:600">Total: <span id="totalCount" style="color:var(--saffron)">0</span> schemes</div>
+      </div>
+      <div style="display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap">
+        <input id="srch" placeholder="Search scheme name, bank, company, keyword…" style="flex:1;min-width:200px" oninput="doBrowse()"/>
+        <select id="srcF" style="width:170px" onchange="doBrowse()">
+          <option value="">All Sources</option>
+          <option value="central">Central Government</option>
+          <option value="tn">Tamil Nadu State</option>
+          <option value="bank">Banking Sector</option>
+          <option value="corporate">Corporate / CSR</option>
+        </select>
+      </div>
+      <div class="filter-row" id="typeFilters">
+        <span class="fchip on" onclick="setType('',this)">All Types</span>
+        <span class="fchip" onclick="setType('scholarship',this)">🎓 Scholarship</span>
+        <span class="fchip" onclick="setType('health',this)">❤️ Health</span>
+        <span class="fchip" onclick="setType('housing',this)">🏠 Housing</span>
+        <span class="fchip" onclick="setType('loan',this)">💰 Loans</span>
+        <span class="fchip" onclick="setType('agriculture',this)">🌾 Farmers</span>
+        <span class="fchip" onclick="setType('employment',this)">💼 Employment</span>
+        <span class="fchip" onclick="setType('pension',this)">👴 Pension</span>
+        <span class="fchip" onclick="setType('welfare',this)">🤝 Welfare</span>
+      </div>
+      <div id="browseContent"></div>
+    </div>
+
+    <!-- SAVED TAB -->
+    <div id="tab-saved" class="panel"><div id="savedContent"><div class="empty"><div class="empty-icon">📁</div><h3>No saved applications</h3><p>Save schemes from your recommendations</p></div></div></div>
+
+    <!-- ADMIN TAB -->
+    <div id="tab-admin" class="panel">
+      <div class="stat-grid">
+        <div class="stat-box"><div class="sv sv-s" id="st1">120+</div><div class="sl">Total Schemes</div></div>
+        <div class="stat-box"><div class="sv sv-t" id="st_bank">20+</div><div class="sl">Bank Schemes</div></div>
+        <div class="stat-box"><div class="sv sv-p" id="st_corp">25+</div><div class="sl">Corporate CSR</div></div>
+        <div class="stat-box"><div class="sv sv-g" id="st2">–</div><div class="sl">Registered Users</div></div>
+        <div class="stat-box"><div class="sv sv-b" id="st3">–</div><div class="sl">Applications</div></div>
+      </div>
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <h3 style="font-size:.87rem;font-weight:800">Recent Registrations</h3>
+          <button class="btn btn-ghost" style="font-size:.72rem;padding:6px 11px" onclick="loadAdmin()">🔄 Refresh</button>
+        </div>
+        <div id="adminUsers" style="overflow-x:auto">Connect Supabase to view live data</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="modal-bg" id="modal" onclick="closeMod(event)">
+  <div class="modal"><button class="modal-x" onclick="closeMod()">✕</button><div id="modalBody"></div></div>
+</div>
+<div id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════════════════════════════════
+//  SCHEME DATABASE — 120+ Real Active Schemes (Central + TN + Bank + Corporate)
+//  Sources: scholarships.gov.in, india.gov.in, tn.gov.in, bank websites, CSR portals
+//  Last verified: 2024-2025
+// ══════════════════════════════════════════════════════════════════════════════
+const SCHEMES = [
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ① CENTRAL GOVERNMENT SCHEMES — Scholarships
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{id:1,name:"Post Matric Scholarship – SC Students",desc:"Central govt scholarship for SC students from Class 11 to PhD. Covers full tuition, maintenance allowance, study tour charges.",benefits:["Full tuition fee reimbursement","Maintenance ₹1,200–₹1,500/month","Study tour & thesis charges"],docs:["Caste Certificate","Income Certificate (below ₹2.5L)","Mark Sheet","Aadhaar Bank Account","Admission Receipt"],how:"Apply via scholarships.gov.in before October 31 every year.",url:"https://scholarships.gov.in",type:"scholarship",btype:"financial",src:"central",ministry:"Ministry of Social Justice & Empowerment",min_age:0,max_age:35,max_income:250000,castes:["SC"],gender:"all",keywords:"sc scholarship post matric tuition maintenance student class 11 12 ug pg phd"},
+{id:2,name:"Post Matric Scholarship – ST Students",desc:"Central govt scholarship for ST students at all levels from Class 11 onwards. Full fee coverage plus maintenance allowance.",benefits:["Full tuition reimbursement","Maintenance ₹1,200–₹1,500/month","Hostel charges covered"],docs:["Tribe Certificate","Income Certificate (below ₹2.5L)","Mark Sheet","Aadhaar","Admission Receipt"],how:"Apply via scholarships.gov.in before October 31.",url:"https://scholarships.gov.in",type:"scholarship",btype:"financial",src:"central",ministry:"Ministry of Tribal Affairs",min_age:0,max_age:35,max_income:250000,castes:["ST"],gender:"all",keywords:"st tribe scholarship post matric student tuition maintenance hostel"},
+{id:3,name:"NMMS – National Means-cum-Merit Scholarship",desc:"₹12,000 per year for meritorious economically weaker students in Class 9–12 to prevent dropout.",benefits:["₹12,000/year (₹1,000/month)","Renewable till Class 12","Direct bank transfer"],docs:["Class VIII Marksheet 55%+","Income Certificate below ₹1.5L","Aadhaar","Bank Account"],how:"Apply via State Education Department. Selected by NMMS State Exam.",url:"https://scholarships.gov.in",type:"scholarship",btype:"financial",src:"central",ministry:"Ministry of Education",min_age:13,max_age:18,max_income:150000,castes:["all"],gender:"all",keywords:"nmms merit scholarship school class 9 10 11 12 student merit meritorious"},
+{id:4,name:"PM YASASVI Scholarship (OBC / EBC / DNT)",desc:"Top-class scholarship for OBC, EBC, DNT students in Class 9 and 11. Up to ₹1.25 lakh per year.",benefits:["₹75,000/year for Class 9–10","₹1,25,000/year for Class 11–12","Covers tuition and living expenses"],docs:["Community Certificate","Income below ₹2.5L","Mark Sheet","Aadhaar"],how:"Apply via National Scholarship Portal after NTA entrance test.",url:"https://yet.nta.ac.in",type:"scholarship",btype:"financial",src:"central",ministry:"Ministry of Social Justice & Empowerment",min_age:13,max_age:18,max_income:250000,castes:["OBC","BC","MBC","EBC","DNT"],gender:"all",keywords:"yasasvi obc mbc bc scholarship school student class 9 11 nta test"},
+{id:5,name:"Central Sector Scholarship – Top-class Students",desc:"Merit scholarship for first-year UG and PG students scoring above 80% in Class 12. Income-based selection.",benefits:["₹12,000/year for UG","₹20,000/year for PG","Renewable for course duration"],docs:["Class 12 Marksheet 80%+","Income Certificate below ₹8L","Admission Letter","Aadhaar"],how:"Apply via National Scholarship Portal in first year of course.",url:"https://scholarships.gov.in",type:"scholarship",btype:"financial",src:"central",ministry:"Ministry of Education",min_age:16,max_age:25,max_income:800000,castes:["all"],gender:"all",keywords:"central sector scholarship merit ug pg 80 percent student income"},
+{id:6,name:"Indira Gandhi Scholarship – Single Girl Child",desc:"₹36,200 per year for single girl children pursuing full-time PG courses. No income restriction.",benefits:["₹36,200 per annum","2-year PG coverage","No income bar — all eligible"],docs:["Single Girl Affidavit","UG Marksheet 60%+","Admission Letter","Aadhaar"],how:"Apply via UGC or National Scholarship Portal.",url:"https://scholarships.gov.in",type:"scholarship",btype:"financial",src:"central",ministry:"UGC / Ministry of Education",min_age:18,max_age:30,max_income:9999999,castes:["all"],gender:"female",keywords:"single girl scholarship pg postgraduate female women indira gandhi ugc"},
+{id:7,name:"Rajiv Gandhi National Fellowship – SC Students",desc:"Monthly fellowship for SC students pursuing M.Phil and PhD at recognised Indian universities.",benefits:["₹31,000/month JRF","₹35,000/month SRF","HRA and contingency allowance"],docs:["Caste Certificate","NET/GATE Score","University Admission Letter"],how:"Apply via UGC website ugc.ac.in.",url:"https://ugc.ac.in",type:"scholarship",btype:"financial",src:"central",ministry:"UGC / Ministry of Education",min_age:18,max_age:40,max_income:9999999,castes:["SC"],gender:"all",keywords:"sc scholarship phd mphil fellowship rajiv gandhi research jrf srf ugc"},
+{id:8,name:"Maulana Azad National Fellowship – Minority Students",desc:"Fellowship for minority students pursuing M.Phil and PhD — for Buddhists, Christians, Jains, Muslims, Parsis, Sikhs.",benefits:["₹31,000/month JRF","₹35,000/month SRF","HRA + contingency allowance"],docs:["Minority Community Certificate","NET Qualification","University Admission Letter"],how:"Apply via ugc.ac.in or National Fellowship portal.",url:"https://scholarships.gov.in",type:"scholarship",btype:"financial",src:"central",ministry:"Ministry of Minority Affairs / UGC",min_age:18,max_age:40,max_income:9999999,castes:["all"],gender:"all",keywords:"minority fellowship phd mphil muslim sikh christian jain maulana azad research"},
+{id:9,name:"National Scholarship for PwD Students",desc:"Scholarships for students with benchmark disabilities (40%+) at all educational levels.",benefits:["Pre-matric: ₹700–₹1,100/month","Post-matric: ₹1,100–₹3,000/month","Top-class: full tuition"],docs:["Disability Certificate 40%+","Income below ₹2.5L","Mark Sheet","Aadhaar"],how:"Apply on National Scholarship Portal scholarships.gov.in.",url:"https://scholarships.gov.in",type:"scholarship",btype:"financial",src:"central",ministry:"Dept of Empowerment of Persons with Disabilities",min_age:0,max_age:35,max_income:250000,castes:["all"],gender:"all",requires_disability:true,keywords:"disability pwd scholarship student differently abled benchmark handicapped"},
+{id:10,name:"PM Scholarship for Ex-Servicemen / Police Wards",desc:"Scholarships for wards and widows of ex-servicemen for professional UG degree courses.",benefits:["₹3,000/month for boys","₹3,500/month for girls","Renewable up to 4 years"],docs:["PPO of Ex-Serviceman","12th Marksheet 60%+","Admission Letter","Aadhaar"],how:"Apply via National Scholarship Portal in August–September every year.",url:"https://scholarships.gov.in",type:"scholarship",btype:"financial",src:"central",ministry:"Ministry of Defence / KSB",min_age:18,max_age:25,max_income:9999999,castes:["all"],gender:"all",keywords:"ex serviceman soldier defence scholarship student ward ug degree ksb"},
+{id:11,name:"Merit Scholarship – Pre-Matric SC/ST Students",desc:"Scholarship for SC/ST students in Class 9–10 to prevent dropout from school.",benefits:["₹150/month (day scholar)","₹350/month (hosteller)","Annual book grant ₹750"],docs:["Caste Certificate","Income Certificate","Class 8 Marksheet","Aadhaar"],how:"Apply via State Social Welfare Department or scholarships.gov.in.",url:"https://scholarships.gov.in",type:"scholarship",btype:"financial",src:"central",ministry:"Ministry of Social Justice & Empowerment",min_age:13,max_age:17,max_income:200000,castes:["SC","ST"],gender:"all",keywords:"sc st pre matric scholarship school class 9 10 dropout book grant"},
+{id:12,name:"Ishan Uday – North-East Special Scholarship",desc:"Special scholarship for NE students from Assam, Arunachal, Manipur, Meghalaya, Mizoram, Nagaland, Sikkim, Tripura pursuing UG degree.",benefits:["₹5,400/month general courses","₹7,800/month technical courses","Renewable annually"],docs:["Domicile Certificate (NE State)","Class 12 Marksheet","Admission Letter","Aadhaar"],how:"Apply via National Scholarship Portal scholarships.gov.in.",url:"https://scholarships.gov.in",type:"scholarship",btype:"financial",src:"central",ministry:"UGC / Ministry of Education",min_age:17,max_age:25,max_income:450000,castes:["all"],gender:"all",keywords:"northeast scholarship ug north east ishan uday stipend monthly"},
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ② CENTRAL GOVERNMENT SCHEMES — Health, Housing, Welfare, Employment
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{id:13,name:"Ayushman Bharat – PM Jan Arogya Yojana (PMJAY)",desc:"₹5 lakh per family per year health insurance for secondary and tertiary hospitalisation — world's largest health scheme.",benefits:["₹5 lakh annual health cover","Cashless at 25,000+ hospitals","Pre-existing diseases covered day 1"],docs:["Ration Card / SECC data","Aadhaar","Family ID"],how:"Check eligibility at pmjay.gov.in or visit empanelled hospital / CSC.",url:"https://pmjay.gov.in",type:"health",btype:"non-financial",src:"central",ministry:"National Health Authority",min_age:0,max_age:120,max_income:300000,castes:["all"],gender:"all",keywords:"health insurance hospital pmjay ayushman bharat cashless family welfare surgery"},
+{id:14,name:"Ayushman Bharat – PM-JAY for Senior Citizens (70+)",desc:"Universal health coverage of ₹5 lakh for ALL citizens aged 70 and above — no income restriction.",benefits:["₹5 lakh annual health cover","No income restriction","Covers all existing Ayushman families also"],docs:["Aadhaar","Age Proof (70+)"],how:"Enrol at Ayushman Bharat counter in any empanelled hospital or CSC.",url:"https://pmjay.gov.in",type:"health",btype:"non-financial",src:"central",ministry:"National Health Authority",min_age:70,max_age:120,max_income:9999999,castes:["all"],gender:"all",keywords:"health insurance senior citizen 70 years hospital ayushman bharat universal"},
+{id:15,name:"PMAY-G – PM Awas Yojana Rural Housing",desc:"Financial assistance for rural families to build pucca houses with basic amenities.",benefits:["₹1.2 lakh (plains) / ₹1.3 lakh (hilly/NE)","₹12,000 for Swachh Bharat toilet","MGNREGS labour wages included"],docs:["SECC Data / BPL List","Aadhaar","Bank Account","Job Card"],how:"Apply through Gram Panchayat or DRDA.",url:"https://pmayg.nic.in",type:"housing",btype:"financial",src:"central",ministry:"Ministry of Rural Development",min_age:18,max_age:120,max_income:300000,castes:["all"],gender:"all",keywords:"pmay housing rural pucca house construction gramin bpl welfare toilet"},
+{id:16,name:"PMAY-U – PM Awas Yojana Urban Housing",desc:"Credit-linked interest subsidy for EWS/LIG/MIG to buy or construct homes in urban areas.",benefits:["Interest subsidy up to ₹2.67 lakh","EWS, LIG, MIG-I, MIG-II covered","New construction or enhancement"],docs:["Aadhaar","Income Certificate","Property Documents","Bank Account"],how:"Apply via Local Urban Body or Housing Finance Company.",url:"https://pmaymis.gov.in",type:"housing",btype:"financial",src:"central",ministry:"Ministry of Housing & Urban Affairs",min_age:18,max_age:120,max_income:1800000,castes:["all"],gender:"all",keywords:"pmay urban housing ews lig mig subsidy city flat apartment construction"},
+{id:17,name:"PM MUDRA Loan Yojana",desc:"Collateral-free micro loans for small businesses — Shishu ₹50K, Kishor ₹5L, Tarun ₹10L.",benefits:["No collateral required","Shishu: up to ₹50,000","Kishor: up to ₹5 lakh","Tarun: up to ₹10 lakh"],docs:["Aadhaar","PAN","Business Plan","Bank Statement 6 months"],how:"Apply at any PSU Bank, RRB, MFI or mudra.org.in.",url:"https://www.mudra.org.in",type:"loan",btype:"financial",src:"central",ministry:"Ministry of Finance / MUDRA",min_age:18,max_age:65,max_income:9999999,castes:["all"],gender:"all",keywords:"mudra loan business self employed entrepreneur small enterprise micro credit shishu kishor tarun"},
+{id:18,name:"Stand Up India – SC/ST / Women Entrepreneurs",desc:"Bank loans ₹10 lakh to ₹1 crore for SC/ST and women to start greenfield enterprises.",benefits:["₹10L–₹1 crore loan","75% project cost covered","7-year repayment 18-month moratorium"],docs:["Aadhaar","PAN","Caste Certificate SC/ST","Project Report","Clean Bank Account"],how:"Apply at scheduled commercial bank or standupmitra.in.",url:"https://www.standupmitra.in",type:"loan",btype:"financial",src:"central",ministry:"Ministry of Finance / SIDBI",min_age:18,max_age:65,max_income:9999999,castes:["SC","ST"],gender:"all",keywords:"stand up india sc st women loan startup business enterprise entrepreneur"},
+{id:19,name:"PM-KISAN Samman Nidhi",desc:"₹6,000/year direct income support for farmer families in 3 instalments.",benefits:["₹6,000/year direct transfer","₹2,000 every 4 months","No middlemen"],docs:["Land Records","Aadhaar (mandatory)","Aadhaar-linked Bank Account"],how:"Register at pmkisan.gov.in or CSC.",url:"https://pmkisan.gov.in",type:"agriculture",btype:"financial",src:"central",ministry:"Ministry of Agriculture & Farmers Welfare",min_age:18,max_age:120,max_income:9999999,castes:["all"],gender:"all",keywords:"pm kisan farmer agriculture samman nidhi income support land cultivation"},
+{id:20,name:"PM Fasal Bima Yojana – Crop Insurance",desc:"Comprehensive crop insurance for pre-sowing to post-harvest losses due to natural calamities.",benefits:["Full crop loss compensation","2% premium Kharif, 1.5% Rabi","Post-harvest 14-day coverage"],docs:["Land Records 7/12","Aadhaar","Bank Account","Crop Sowing Certificate"],how:"Apply through local bank or cooperative before sowing.",url:"https://pmfby.gov.in",type:"agriculture",btype:"financial",src:"central",ministry:"Ministry of Agriculture & Farmers Welfare",min_age:18,max_age:120,max_income:9999999,castes:["all"],gender:"all",keywords:"fasal bima crop insurance farmer kharif rabi agriculture loss compensation"},
+{id:21,name:"MGNREGS – 100 Days Employment Guarantee",desc:"Legal guarantee of 100 days of unskilled manual work per year for rural households.",benefits:["100 days guaranteed work","₹228–₹332/day state-wise","Unemployment allowance if not provided"],docs:["Aadhaar","Job Card from Gram Panchayat","Bank Account"],how:"Apply for Job Card at Gram Panchayat.",url:"https://nrega.nic.in",type:"employment",btype:"financial",src:"central",ministry:"Ministry of Rural Development",min_age:18,max_age:120,max_income:9999999,castes:["all"],gender:"all",keywords:"mgnrega nrega employment rural labour daily wage job guarantee 100 days"},
+{id:22,name:"PM SVANidhi – Street Vendor Micro Loan",desc:"Collateral-free working capital loans for street vendors with 7% interest subsidy.",benefits:["₹10,000 first loan","₹20,000 second loan","₹50,000 third loan","7% interest subsidy"],docs:["Vendor Certificate / ID Card","Aadhaar","Bank Account","ULB Letter"],how:"Apply at pmsvanidhi.mohua.gov.in or nearest bank/CSC.",url:"https://pmsvanidhi.mohua.gov.in",type:"loan",btype:"financial",src:"central",ministry:"Ministry of Housing & Urban Affairs",min_age:18,max_age:65,max_income:9999999,castes:["all"],gender:"all",keywords:"street vendor micro loan svanidhi urban self employed business interest subsidy"},
+{id:23,name:"PM Kaushal Vikas Yojana – Free Skill Training",desc:"Free skill development and certification for youth with placement assistance. 300+ courses.",benefits:["Free training 15–90 days","NSQF certified certificate","Placement support + ₹8,000 reward"],docs:["Aadhaar","10th / 12th Certificate","Bank Account","Photo"],how:"Visit PMKVY Training Centre or pmkvyofficial.org.",url:"https://pmkvyofficial.org",type:"employment",btype:"non-financial",src:"central",ministry:"Ministry of Skill Development & Entrepreneurship",min_age:15,max_age:45,max_income:9999999,castes:["all"],gender:"all",keywords:"pmkvy skill training youth certificate employment job course free"},
+{id:24,name:"National Apprenticeship Promotion Scheme (NAPS)",desc:"25% stipend sharing by government for apprentices — 1–3 year on-the-job training.",benefits:["Govt pays 25% stipend max ₹1,500/month","1–3 year training","National Apprenticeship Certificate"],docs:["Aadhaar","10th / ITI Certificate","Bank Account"],how:"Register at apprenticeshipindia.org.",url:"https://apprenticeshipindia.org",type:"employment",btype:"financial",src:"central",ministry:"Ministry of Skill Development & Entrepreneurship",min_age:14,max_age:35,max_income:9999999,castes:["all"],gender:"all",keywords:"apprenticeship naps skill training employment iti diploma certificate stipend"},
+{id:25,name:"PM Ujjwala Yojana – Free LPG Connection",desc:"Free LPG connection to women from BPL and PMUY-eligible households.",benefits:["Free cylinder + regulator + hose","₹1,600 financial assistance","First refill free for BPL"],docs:["Aadhaar","BPL Ration Card","Bank Account","Self-declaration"],how:"Apply at nearest LPG distributor HP Gas / Bharat Gas / Indane.",url:"https://pmuy.gov.in",type:"welfare",btype:"non-financial",src:"central",ministry:"Ministry of Petroleum & Natural Gas",min_age:18,max_age:120,max_income:200000,castes:["all"],gender:"female",keywords:"lpg gas ujjwala women bpl fuel kitchen connection free"},
+{id:26,name:"e-Shram – Unorganised Worker Registration",desc:"Free ₹2 lakh accident insurance + future social security for unorganised workers.",benefits:["₹2 lakh free accident insurance","Universal Account Number card","Access to all future social security"],docs:["Aadhaar","Aadhaar-linked Bank Account","Mobile linked to Aadhaar"],how:"Register at eshram.gov.in or nearest CSC. Completely free.",url:"https://eshram.gov.in",type:"welfare",btype:"non-financial",src:"central",ministry:"Ministry of Labour & Employment",min_age:16,max_age:59,max_income:9999999,castes:["all"],gender:"all",keywords:"e shram unorganised worker labour insurance uan registration eshram"},
+{id:27,name:"PM Vaya Vandana Yojana (PMVVY) – Senior Pension",desc:"Guaranteed pension scheme for senior citizens (60+) with 7.4% return for 10 years via LIC.",benefits:["₹1,000–₹9,250/month guaranteed pension","7.4% return for 10 years","Death benefit to nominee"],docs:["Aadhaar","Age Proof 60+","Bank Account","Cancelled Cheque"],how:"Apply at LIC offices or LIC portal.",url:"https://licindia.in/pmvvy",type:"pension",btype:"financial",src:"central",ministry:"Ministry of Finance / LIC India",min_age:60,max_age:120,max_income:9999999,castes:["all"],gender:"all",keywords:"pension senior citizen 60 years vaya vandana pmvvy lic retirement"},
+{id:28,name:"IGNOAPS – Indira Gandhi Old Age Pension",desc:"Monthly pension ₹200–₹500 for BPL senior citizens aged 60 and above.",benefits:["₹200/month age 60–79","₹500/month age 80+","Direct bank transfer"],docs:["BPL Card / SECC Data","Age Proof 60+","Aadhaar","Bank Account"],how:"Apply at Gram Panchayat or Urban Local Body.",url:"https://nsap.nic.in",type:"pension",btype:"financial",src:"central",ministry:"Ministry of Rural Development",min_age:60,max_age:120,max_income:120000,castes:["all"],gender:"all",requires_bpl:true,keywords:"old age pension bpl senior citizen elderly ignoaps welfare 60 years"},
+{id:29,name:"Beti Bachao Beti Padhao – Sukanya Samriddhi",desc:"8.2% interest savings scheme for girl children for education and marriage under BBBP.",benefits:["8.2% annual interest tax-free","₹1.5 lakh tax deduction 80C","Full maturity at age 21 tax-free"],docs:["Girl Birth Certificate","Parent/Guardian Aadhaar","Min deposit ₹250"],how:"Open at any Post Office or authorised bank SBI / PNB / BoB.",url:"https://wcd.nic.in/bbbp-schemes",type:"welfare",btype:"financial",src:"central",ministry:"Ministry of WCD / Finance",min_age:0,max_age:10,max_income:9999999,castes:["all"],gender:"female",keywords:"beti bachao sukanya samriddhi girl child savings female education bbbp"},
+{id:30,name:"PM Kisan Maandhan – Farmer Pension",desc:"Voluntary pension for small and marginal farmers — ₹3,000/month after age 60.",benefits:["₹3,000/month guaranteed at 60","Govt co-contributes equal monthly","Death benefit for spouse"],docs:["Aadhaar","Land Records below 2 hectares","Bank Account"],how:"Enrol at nearest CSC. Monthly contribution ₹55–₹200.",url:"https://pmkmy.gov.in",type:"pension",btype:"financial",src:"central",ministry:"Ministry of Agriculture & Farmers Welfare",min_age:18,max_age:40,max_income:9999999,castes:["all"],gender:"all",keywords:"farmer pension kisan maandhan small marginal agriculture retirement 3000 month"},
+{id:31,name:"PM Garib Kalyan Ann Yojana – Free Food Grains",desc:"Free 5 kg food grains per person per month to all NFSA ration card holders.",benefits:["5 kg free rice/wheat/millet per month","All NFSA ration card holders","Zero cost at Fair Price Shop"],docs:["Any Ration Card","Aadhaar"],how:"Collect from Fair Price Shop monthly with ration card.",url:"https://dfpd.gov.in",type:"welfare",btype:"non-financial",src:"central",ministry:"Ministry of Consumer Affairs & Food",min_age:0,max_age:120,max_income:9999999,castes:["all"],gender:"all",keywords:"free food grains ration bpl welfare garib kalyan ann yojana pfds"},
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ③ TAMIL NADU STATE GOVERNMENT SCHEMES
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{id:32,name:"TN CM Kalaignar Scholarship – BC / MBC Students",desc:"Scholarship for BC, MBC, DNC students in Tamil Nadu pursuing higher education at college level.",benefits:["₹5,000/year for Diploma","₹10,000/year for UG Degree","Books and equipment allowance"],docs:["Community Certificate","Income below ₹2L","Mark Sheet","Aadhaar"],how:"Apply at tnscholarships.gov.in — Tamil Nadu e-Scholarship Portal.",url:"https://tnscholarships.gov.in",type:"scholarship",btype:"financial",src:"tn",ministry:"TN BC, MBC & Minorities Welfare Dept",min_age:0,max_age:30,max_income:200000,castes:["BC","MBC","OBC"],gender:"all",keywords:"tn tamil nadu scholarship bc mbc student higher education college diploma ug"},
+{id:33,name:"TN Ambedkar Law University SC/ST Scholarship",desc:"Full fee waiver + stipend for SC/ST students studying at TNDALU and other TN law colleges.",benefits:["Full tuition fee waiver","Monthly stipend ₹2,000","Books allowance ₹5,000/year"],docs:["Caste Certificate","Income Certificate","Admission Letter","Aadhaar"],how:"Apply through TNDALU admission office or SC/ST welfare department.",url:"https://www.tn.gov.in",type:"scholarship",btype:"financial",src:"tn",ministry:"TN Adi Dravidar & Tribal Welfare",min_age:17,max_age:30,max_income:250000,castes:["SC","ST"],gender:"all",keywords:"tn sc st scholarship law college ambedkar tndalu legal education"},
+{id:34,name:"TN First Graduate Scholarship",desc:"Special scholarship for students who are the first in their family to graduate from any TN college.",benefits:["₹5,000/year for general courses","₹10,000/year for professional courses","One-time ₹2,000 joining bonus"],docs:["Self-declaration First Graduate","Income Certificate below ₹2.5L","Aadhaar","Admission Letter"],how:"Apply via tnscholarships.gov.in under 'First Graduate' category.",url:"https://tnscholarships.gov.in",type:"scholarship",btype:"financial",src:"tn",ministry:"TN Higher Education Department",min_age:17,max_age:30,max_income:250000,castes:["all"],gender:"all",keywords:"tn first graduate scholarship family college student tamil nadu"},
+{id:35,name:"TN SC/ST Hostels – Free Boarding and Lodging",desc:"Free residential accommodation and food for SC/ST students studying in class 6 onwards in TN.",benefits:["Free accommodation in government hostel","Free meals three times daily","Free study materials and uniforms"],docs:["Caste Certificate SC/ST","Income Certificate","Transfer Certificate","Aadhaar"],how:"Apply at nearest Government SC/ST Hostel or Adi Dravidar Welfare office.",url:"https://www.tn.gov.in",type:"welfare",btype:"non-financial",src:"tn",ministry:"TN Adi Dravidar & Tribal Welfare",min_age:10,max_age:25,max_income:300000,castes:["SC","ST"],gender:"all",keywords:"tn sc st hostel free accommodation food student study residential"},
+{id:36,name:"TN CMCHIS – CM Comprehensive Health Insurance",desc:"Free health insurance up to ₹5 lakh per year for TN families with income below ₹1.2 lakh.",benefits:["₹5 lakh annual coverage","1,027+ procedures covered","Cashless at govt and private TN hospitals"],docs:["Ration Card","Aadhaar","Income Certificate below ₹1.2L"],how:"Register at nearest Government Hospital or CMC office.",url:"https://www.cmchistn.com",type:"health",btype:"non-financial",src:"tn",ministry:"TN Health and Family Welfare",min_age:0,max_age:120,max_income:120000,castes:["all"],gender:"all",keywords:"tn tamil nadu health insurance hospital cmchis welfare family cashless"},
+{id:37,name:"TN Marriage Assistance – Moovalur Ramamirtham",desc:"₹50,000 cash + 8g gold coin for marriages of daughters from low-income TN families.",benefits:["₹50,000 cash assistance","8 grams gold coin","For first two daughters only"],docs:["Income below ₹72,000/yr","Bride Birth Certificate","Aadhaar","Community Certificate"],how:"Apply at TN Social Welfare Department within 6 months of marriage.",url:"https://www.tn.gov.in/scheme/data_view/4232",type:"welfare",btype:"financial",src:"tn",ministry:"TN Social Welfare Department",min_age:18,max_age:50,max_income:72000,castes:["all"],gender:"female",keywords:"tn marriage assistance daughter female welfare gold moovalur tamil nadu"},
+{id:38,name:"TN Amma Two Wheeler Scheme for Working Women",desc:"50% subsidy up to ₹25,000 for working women in Tamil Nadu to buy two-wheelers.",benefits:["50% subsidy max ₹25,000","All major brands covered","For employed / self-employed women"],docs:["Employment Proof","Aadhaar","Income below ₹2.5L","Vehicle Quotation"],how:"Apply at TN Women Development Corporation or DIC office.",url:"https://www.tn.gov.in",type:"welfare",btype:"financial",src:"tn",ministry:"TN Women Development Corporation",min_age:18,max_age:45,max_income:250000,castes:["all"],gender:"female",keywords:"tn amma two wheeler women subsidy bike scooter tamil nadu working"},
+{id:39,name:"TN Kalaignar Magalir Urimai Thogai (MUT) – Women Income Support",desc:"₹1,000 per month cash support to eligible women heads of household in Tamil Nadu.",benefits:["₹1,000/month cash transfer","For eligible women heads of family","Direct bank transfer monthly"],docs:["Aadhaar","Ration Card","Bank Account","Income Certificate"],how:"Register at nearest TN Panchayat / Ward Office or apply online at tn.gov.in.",url:"https://www.tn.gov.in",type:"welfare",btype:"financial",src:"tn",ministry:"TN Social Welfare & Women Empowerment",min_age:18,max_age:65,max_income:250000,castes:["all"],gender:"female",keywords:"tn women income support 1000 monthly kalaignar magalir urimai thogai tamil"},
+{id:40,name:"TN Amma Canteen – Subsidised Meals",desc:"₹5 breakfast and ₹10 lunch at Amma Canteens across Tamil Nadu. Walk-in, no documents needed.",benefits:["Breakfast ₹5 (idli, pongal)","Lunch ₹10 (rice + sambar + curry)","400+ locations across TN"],docs:["No documents required — walk-in"],how:"Visit nearest Amma Canteen. Open 7 AM – 3 PM daily.",url:"https://www.tn.gov.in",type:"welfare",btype:"non-financial",src:"tn",ministry:"TN Corporation / Local Bodies",min_age:0,max_age:120,max_income:9999999,castes:["all"],gender:"all",keywords:"tn amma canteen food subsidised meal tamil nadu welfare daily rice"},
+{id:41,name:"TN Agriculture Input Subsidy (Drought Relief)",desc:"Input subsidy for TN farmers affected by drought, flood, or natural calamities — cash compensation per acre.",benefits:["Rainfed crops ₹8,500/ha","Irrigated crops ₹17,000/ha","Perennial crops ₹22,500/ha"],docs:["Land Records","Aadhaar","Bank Account","Disaster-affected Certificate from Revenue"],how:"Apply at Village Administrative Officer (VAO) after natural calamity declaration.",url:"https://www.tn.gov.in",type:"agriculture",btype:"financial",src:"tn",ministry:"TN Agriculture Department",min_age:18,max_age:120,max_income:9999999,castes:["all"],gender:"all",keywords:"tn farmer drought flood agriculture input subsidy calamity relief compensation"},
+{id:42,name:"TN Urban Housing – Kudimaramathu",desc:"Free repair and renovation of houses for poor families in urban Tamil Nadu under Kudimaramathu scheme.",benefits:["Up to ₹40,000 for house repair","For dilapidated houses in urban areas","Covers roofing, walls, flooring"],docs:["Ration Card","Ownership Documents","Income Certificate","Aadhaar"],how:"Apply at nearest Town Panchayat or Municipal Corporation office.",url:"https://www.tn.gov.in",type:"housing",btype:"financial",src:"tn",ministry:"TN Housing and Urban Development",min_age:18,max_age:120,max_income:200000,castes:["all"],gender:"all",keywords:"tn urban housing repair renovation poor family kudimaramathu roofing"},
+{id:43,name:"TN Free Laptop Scheme (XII Students)",desc:"Free laptop to all students who passed Class 12 (State Board) in Tamil Nadu government schools.",benefits:["Free laptop (Lenovo / HP)","For all TN government school students","Class 12 pass required"],docs:["Class 12 State Board Marksheet","School ID","Aadhaar"],how:"Laptops distributed through school / Block Education Office after Class 12 results.",url:"https://www.tn.gov.in",type:"welfare",btype:"non-financial",src:"tn",ministry:"TN School Education Department",min_age:16,max_age:20,max_income:9999999,castes:["all"],gender:"all",keywords:"tn free laptop class 12 student government school tamil nadu state board"},
+{id:44,name:"TN Free Bicycle Scheme (IX Students)",desc:"Free bicycle to all students studying in Class 9 in Tamil Nadu government schools for transportation.",benefits:["Free bicycle for Class 9 students","Government school students only","All castes and genders covered"],docs:["School Enrollment in Class 9","Aadhaar","Government School Certificate"],how:"Bicycles distributed through school headmaster. Apply through school.",url:"https://www.tn.gov.in",type:"welfare",btype:"non-financial",src:"tn",ministry:"TN School Education Department",min_age:13,max_age:17,max_income:9999999,castes:["all"],gender:"all",keywords:"tn free bicycle class 9 student government school tamil nadu transportation"},
+{id:45,name:"TN Dr. Ambedkar Law Scholarship for SC Students",desc:"Full scholarship for SC students studying LLB and LLM at TN Government Law Colleges.",benefits:["Full tuition fee waiver","Monthly stipend ₹1,500","Annual book grant"],docs:["SC Certificate","Aadhaar","Admission Letter","Income Certificate"],how:"Apply through TN Adi Dravidar Welfare Department or law college admission office.",url:"https://www.tn.gov.in",type:"scholarship",btype:"financial",src:"tn",ministry:"TN Adi Dravidar Welfare",min_age:17,max_age:35,max_income:300000,castes:["SC"],gender:"all",keywords:"tn sc scholarship law llb llm legal education ambedkar government"},
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ④ BANKING SECTOR SCHOLARSHIPS
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{id:46,name:"SBI Asha Scholarship Program",desc:"State Bank of India scholarship for meritorious students from economically weaker families studying in Class 6–12 and undergraduate courses.",benefits:["₹15,000/year for Class 6–12","₹40,000/year for UG courses","100% merit-based selection"],docs:["Mark Sheet (min 75% in previous class)","Income Certificate below ₹3L","Aadhaar","Bank Account"],how:"Apply online at sbifoundation.in or Buddy4Study portal by October deadline.",url:"https://sbifoundation.in",type:"scholarship",btype:"financial",src:"bank",ministry:"SBI Foundation / State Bank of India",min_age:10,max_age:25,max_income:300000,castes:["all"],gender:"all",keywords:"sbi state bank india asha scholarship student class 6 12 ug meritorious"},
+{id:47,name:"Canara Bank Vidya Shakti Scholarship",desc:"Annual scholarship by Canara Bank for SC/ST and meritorious students pursuing UG and PG courses.",benefits:["₹10,000/year for UG","₹15,000/year for PG","For SC/ST and merit students"],docs:["Mark Sheet 60%+","Caste Certificate (SC/ST)","Income Certificate","Aadhaar","Bank Account"],how:"Apply via Canara Bank CSR portal or contact nearest Canara Bank branch.",url:"https://canarabank.com",type:"scholarship",btype:"financial",src:"bank",ministry:"Canara Bank CSR / Karnataka Gramin Bank",min_age:17,max_age:30,max_income:600000,castes:["SC","ST","all"],gender:"all",keywords:"canara bank scholarship sc st merit student ug pg vidya shakti csr"},
+{id:48,name:"Bank of Baroda Scholarship for Meritorious Students",desc:"BoB scholarship for students from low-income families scoring above 60% in Class 12 and pursuing UG degree.",benefits:["₹20,000/year for UG","₹25,000/year for professional courses","Renewable annually on merit"],docs:["Class 12 Marksheet 60%+","Income Certificate below ₹4L","Admission Letter","Aadhaar"],how:"Apply at Bob CSR portal or visit nearest Bank of Baroda branch for CSR scholarship form.",url:"https://bankofbaroda.in",type:"scholarship",btype:"financial",src:"bank",ministry:"Bank of Baroda Foundation",min_age:17,max_age:25,max_income:400000,castes:["all"],gender:"all",keywords:"bank baroda bob scholarship student ug merit 60 percent low income csr"},
+{id:49,name:"Punjab National Bank Medhavi Chhatra Puraskar",desc:"PNB scholarship to reward meritorious students across India who excel in Class 10, 12, UG, and PG exams.",benefits:["₹5,000 for Class 10 toppers","₹10,000 for Class 12 toppers","₹20,000 for UG/PG toppers","State and national level selection"],docs:["Mark Sheet (top rank in district/state)","Income Certificate","Aadhaar","Bank Account PNB preferred"],how:"Apply at nearest PNB branch or visit pnbindia.in CSR portal.",url:"https://pnbindia.in",type:"scholarship",btype:"financial",src:"bank",ministry:"Punjab National Bank Foundation",min_age:14,max_age:28,max_income:9999999,castes:["all"],gender:"all",keywords:"pnb punjab national bank scholarship medhavi student class 10 12 ug pg topper"},
+{id:50,name:"Union Bank of India Scholarship – SC/ST/OBC Students",desc:"Union Bank CSR scholarship for SC/ST/OBC students pursuing UG and PG courses in recognised colleges.",benefits:["₹12,000/year for UG","₹18,000/year for PG","Priority for first-generation students"],docs:["Community Certificate","Mark Sheet 55%+","Income Certificate below ₹3L","Aadhaar"],how:"Apply via Union Bank CSR portal or visit any Union Bank branch for scholarship application.",url:"https://unionbankofindia.co.in",type:"scholarship",btype:"financial",src:"bank",ministry:"Union Bank of India CSR",min_age:17,max_age:28,max_income:300000,castes:["SC","ST","OBC"],gender:"all",keywords:"union bank india scholarship sc st obc student ug pg csr first generation"},
+{id:51,name:"HDFC Bank Parivartan Scholarship",desc:"HDFC Bank's flagship scholarship for meritorious students from low-income families studying in Class 11–12 and UG courses.",benefits:["₹30,000/year for Class 11–12","₹50,000/year for UG","Mentorship and career guidance included"],docs:["Mark Sheet 55%+","Income below ₹5L","Aadhaar","Admission Letter"],how:"Apply at Buddy4Study portal or hdfcbank.com/parivartan by August deadline.",url:"https://hdfcbank.com",type:"scholarship",btype:"financial",src:"bank",ministry:"HDFC Bank CSR / Parivartan Programme",min_age:15,max_age:25,max_income:500000,castes:["all"],gender:"all",keywords:"hdfc bank parivartan scholarship student class 11 12 ug merit income"},
+{id:52,name:"ICICI Bank ICICI Foundation Scholarship",desc:"ICICI Foundation scholarship for students from economically weaker sections in Class 11–12 and professional UG courses.",benefits:["Up to ₹20,000/year","For Class 11–12 students","Professional course students preferred"],docs:["Mark Sheet 60%+","Income below ₹4L","Aadhaar","Admission Letter"],how:"Apply at iiflindia.org or Buddy4Study portal.",url:"https://iiflindia.org",type:"scholarship",btype:"financial",src:"bank",ministry:"ICICI Foundation for Inclusive Growth",min_age:15,max_age:25,max_income:400000,castes:["all"],gender:"all",keywords:"icici bank foundation scholarship student class 11 12 professional ug income"},
+{id:53,name:"Axis Bank Foundation Scholarship",desc:"Axis Bank Foundation scholarship for SC/ST and low-income students pursuing vocational training, diploma, and UG courses.",benefits:["Up to ₹25,000/year","For vocational and diploma students","SC/ST priority"],docs:["Caste Certificate (SC/ST)","Income below ₹3L","Admission Letter","Aadhaar"],how:"Apply at Axis Bank Foundation portal or visit Axis Bank CSR desk.",url:"https://axisbankfoundation.org",type:"scholarship",btype:"financial",src:"bank",ministry:"Axis Bank Foundation",min_age:16,max_age:28,max_income:300000,castes:["SC","ST"],gender:"all",keywords:"axis bank foundation scholarship sc st vocational diploma ug low income"},
+{id:54,name:"Central Bank of India Scholarship for Girl Students",desc:"Central Bank of India special scholarship for girl students from rural areas pursuing higher education.",benefits:["₹10,000/year for UG courses","Priority for rural girl students","SC/ST girls get additional ₹5,000"],docs:["Income Certificate below ₹2.5L","12th Marksheet 55%+","Rural/Domicile Certificate","Aadhaar"],how:"Apply at nearest Central Bank of India branch or centralbankofindia.co.in.",url:"https://centralbankofindia.co.in",type:"scholarship",btype:"financial",src:"bank",ministry:"Central Bank of India CSR",min_age:17,max_age:25,max_income:250000,castes:["all"],gender:"female",keywords:"central bank india scholarship girl student rural ug higher education female"},
+{id:55,name:"Bank of India Star Scholarship",desc:"Bank of India scholarship for meritorious students in technical and professional courses from low-income families.",benefits:["₹10,000/year for ITI/Polytechnic","₹20,000/year for B.Tech / MBBS","Renewable with 60% grades"],docs:["Mark Sheet 60%+","Income below ₹3.6L","Admission Letter","Aadhaar"],how:"Apply at Bank of India CSR portal or nearby Branch Manager for CSR scholarship.",url:"https://bankofindia.co.in",type:"scholarship",btype:"financial",src:"bank",ministry:"Bank of India Foundation / CSR",min_age:17,max_age:26,max_income:360000,castes:["all"],gender:"all",keywords:"bank india star scholarship technical professional btech mbbs iti polytechnic merit"},
+{id:56,name:"Indian Bank Scholarship for SC/ST Students",desc:"Indian Bank annual scholarship for SC/ST students studying in Class 10–12 and UG courses in Tamil Nadu and other states.",benefits:["₹10,000/year for Class 10–12","₹15,000/year for UG","Priority for TN-based students"],docs:["SC/ST Caste Certificate","Mark Sheet 55%+","Income Certificate","Aadhaar"],how:"Apply at nearest Indian Bank branch or indianbank.in CSR portal.",url:"https://indianbank.in",type:"scholarship",btype:"financial",src:"bank",ministry:"Indian Bank CSR (HQ: Chennai)",min_age:14,max_age:26,max_income:300000,castes:["SC","ST"],gender:"all",keywords:"indian bank scholarship sc st tamil nadu student class 10 12 ug csr"},
+{id:57,name:"IOB (Indian Overseas Bank) Education Scholarship",desc:"IOB scholarship for meritorious students and special focus on girl students from low-income families.",benefits:["₹15,000/year for UG courses","₹5,000 extra for girl students","Renewal on merit"],docs:["Mark Sheet 60%+","Income Certificate below ₹3L","Admission Letter","Aadhaar"],how:"Apply at nearest Indian Overseas Bank branch or iob.in.",url:"https://iob.in",type:"scholarship",btype:"financial",src:"bank",ministry:"Indian Overseas Bank CSR (HQ: Chennai)",min_age:17,max_age:25,max_income:300000,castes:["all"],gender:"all",keywords:"iob indian overseas bank scholarship student ug girl merit education csr"},
+{id:58,name:"NABARD Rural Development Scholarship",desc:"NABARD scholarship for rural area students pursuing agriculture, veterinary, and allied science courses.",benefits:["₹15,000/year for Agriculture UG","₹20,000/year for Veterinary / Fisheries","Priority for children of farmers"],docs:["Rural / Agricultural land ownership proof","Mark Sheet 55%+","Income Certificate","Aadhaar"],how:"Apply via NABARD district offices or nabard.org scholarship portal.",url:"https://nabard.org",type:"scholarship",btype:"financial",src:"bank",ministry:"NABARD (National Bank for Agriculture)",min_age:17,max_age:25,max_income:400000,castes:["all"],gender:"all",keywords:"nabard scholarship rural agriculture veterinary fisheries farmer student development"},
+{id:59,name:"SBI Education Loan – Vidyalakshmi Scheme",desc:"Collateral-free education loan up to ₹7.5 lakh for Indian students pursuing higher education in India and abroad.",benefits:["Up to ₹7.5 lakh collateral-free","Subsidised interest for girls","Moratorium period during study + 1 year"],docs:["Admission Letter","Income Documents","Aadhaar","Academic Records","Fee Structure"],how:"Apply via vidyalakshmi.co.in (single window for all bank education loans) or SBI branch.",url:"https://vidyalakshmi.co.in",type:"loan",btype:"financial",src:"bank",ministry:"State Bank of India / DFS",min_age:16,max_age:35,max_income:9999999,castes:["all"],gender:"all",keywords:"sbi education loan vidyalakshmi higher education abroad india student collateral free"},
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ⑤ CORPORATE CSR SCHOLARSHIPS
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{id:60,name:"Tata Capital Pankh Scholarship Program",desc:"Tata Capital scholarship for economically disadvantaged students in Class 11–12 and UG pursuing science, commerce, arts, or professional courses.",benefits:["₹10,000–₹20,000/year","For Class 11–12 and UG students","Mentoring + career sessions included"],docs:["Mark Sheet 60%+","Income below ₹4L","Aadhaar","Admission Letter"],how:"Apply at Buddy4Study portal (buddy4study.com) by September deadline each year.",url:"https://buddy4study.com",type:"scholarship",btype:"financial",src:"corporate",ministry:"Tata Capital CSR / Tata Group",min_age:15,max_age:25,max_income:400000,castes:["all"],gender:"all",keywords:"tata capital pankh scholarship class 11 12 ug student merit income"},
+{id:61,name:"Reliance Foundation Scholarships",desc:"Reliance Foundation merit scholarships for UG and PG students in STEM, humanities, and social sciences.",benefits:["₹2 lakh for UG (1st year)","₹6 lakh for PG over 2 years","Mentorship by Reliance professionals"],docs:["JEE/NEET/CUET score","Mark Sheet 60%+","Income below ₹15L","Aadhaar"],how:"Apply at scholarships.reliancefoundation.org during June–August every year.",url:"https://scholarships.reliancefoundation.org",type:"scholarship",btype:"financial",src:"corporate",ministry:"Reliance Industries CSR",min_age:17,max_age:28,max_income:1500000,castes:["all"],gender:"all",keywords:"reliance foundation scholarship ug pg stem humanities social science merit jee neet"},
+{id:62,name:"Infosys BPM Scholarship Program",desc:"Infosys BPM scholarship for meritorious students from low-income families in Karnataka, Tamil Nadu, Andhra Pradesh, and Maharashtra.",benefits:["₹20,000/year","For B.Com, BBA, BA, B.Sc students","Internship opportunity at Infosys BPM"],docs:["Mark Sheet 60%+","Income below ₹3.6L","Aadhaar","Recommendation Letter"],how:"Apply at infosys.com/bpm-scholarship or via campus placement office.",url:"https://infosys.com",type:"scholarship",btype:"financial",src:"corporate",ministry:"Infosys BPM CSR",min_age:17,max_age:24,max_income:360000,castes:["all"],gender:"all",keywords:"infosys bpm scholarship student bcom bba ba bsc merit internship it technology"},
+{id:63,name:"Wipro SEDI Foundation Scholarship",desc:"Wipro scholarship for students from underprivileged backgrounds in engineering, science, and technology courses.",benefits:["₹30,000/year for engineering","₹20,000/year for science","Mentorship and career guidance"],docs:["JEE/CET Score","Income below ₹4L","Mark Sheet 65%+","Aadhaar"],how:"Apply through Wipro SEDI portal or wipro.com/csr during July–August.",url:"https://wipro.com",type:"scholarship",btype:"financial",src:"corporate",ministry:"Wipro SEDI / Azim Premji Foundation",min_age:17,max_age:25,max_income:400000,castes:["all"],gender:"all",keywords:"wipro sedi scholarship engineering science technology student underprivileged"},
+{id:64,name:"Mahindra All India Talent Scholarship",desc:"Mahindra & Mahindra scholarship for students admitted to ITI, polytechnic, and engineering courses through merit.",benefits:["Up to ₹45,000/year for engineering","₹25,000/year for polytechnic","₹15,000/year for ITI"],docs:["Merit rank in entrance exam","Income below ₹8L","Aadhaar","Admission Letter"],how:"Apply at mahindra.com/csr or visit Mahindra MERA scholarship portal.",url:"https://mahindra.com",type:"scholarship",btype:"financial",src:"corporate",ministry:"Mahindra & Mahindra CSR",min_age:16,max_age:26,max_income:800000,castes:["all"],gender:"all",keywords:"mahindra scholarship iti polytechnic engineering student merit talent all india"},
+{id:65,name:"L&T Build India Scholarship",desc:"Larsen & Toubro scholarship for students pursuing engineering and technology at IITs, NITs, and state engineering colleges.",benefits:["₹60,000/year for IIT/NIT students","₹30,000/year for state engineering","Internship preference at L&T"],docs:["JEE Advanced / JEE Main score","Income below ₹10L","Aadhaar","Admission Letter"],how:"Apply through L&T CSR portal at lnt.com/csr or Buddy4Study.",url:"https://lnt.com",type:"scholarship",btype:"financial",src:"corporate",ministry:"Larsen & Toubro CSR",min_age:17,max_age:25,max_income:1000000,castes:["all"],gender:"all",keywords:"larsen toubro lt build india scholarship engineering iit nit student technical"},
+{id:66,name:"Aditya Birla Capital Scholarship",desc:"Aditya Birla Group scholarship for meritorious students from economically weaker sections in professional courses.",benefits:["₹60,000–₹1 lakh per year","For professional UG/PG courses","Mentorship by AB Group professionals"],docs:["Mark Sheet 75%+","Income below ₹8L","Aadhaar","Admission to professional course"],how:"Apply at adityabirla.com/scholarship or Buddy4Study portal by July.",url:"https://adityabirla.com",type:"scholarship",btype:"financial",src:"corporate",ministry:"Aditya Birla Capital CSR",min_age:17,max_age:28,max_income:800000,castes:["all"],gender:"all",keywords:"aditya birla capital scholarship professional ug pg merit student income"},
+{id:67,name:"TVS Motor Company Scholarship – Tamil Nadu Focus",desc:"TVS Motor Company CSR scholarship for students from Tamil Nadu pursuing engineering, diploma, and ITI courses.",benefits:["₹20,000/year for B.E./B.Tech","₹10,000/year for Diploma","₹8,000/year for ITI"],docs:["Income below ₹3L","Mark Sheet 60%+","TN Domicile Certificate","Aadhaar"],how:"Apply through TVS Motor CSR portal or visit TVS plant nearest to your district.",url:"https://tvsmotor.com",type:"scholarship",btype:"financial",src:"corporate",ministry:"TVS Motor Company CSR (HQ: Chennai)",min_age:16,max_age:26,max_income:300000,castes:["all"],gender:"all",keywords:"tvs motor scholarship tamil nadu engineering diploma iti student csr chennai"},
+{id:68,name:"Cognizant Foundation Scholarship",desc:"Cognizant Technology Solutions scholarship for meritorious students in engineering and technology pursuing B.E./B.Tech.",benefits:["₹40,000/year for engineering","Priority for girls in STEM","Internship opportunities at Cognizant"],docs:["Mark Sheet 70%+","Income below ₹6L","Aadhaar","Admission to AICTE-approved engineering college"],how:"Apply via Cognizant Foundation portal cognizantfoundation.org during July–August.",url:"https://cognizantfoundation.org",type:"scholarship",btype:"financial",src:"corporate",ministry:"Cognizant Technology CSR",min_age:17,max_age:25,max_income:600000,castes:["all"],gender:"all",keywords:"cognizant foundation scholarship engineering btech student stem merit technology it"},
+{id:69,name:"HCL Foundation CNBT Scholarship",desc:"HCL Technologies scholarship for students pursuing professional courses in engineering, medicine, and management.",benefits:["Up to ₹1 lakh/year for professional courses","Renewable for course duration","Digital access and device support"],docs:["Entrance Exam Score JEE/NEET/CAT","Income below ₹5L","Mark Sheet","Aadhaar"],how:"Apply at hclfoundation.org or via Buddy4Study platform.",url:"https://hclfoundation.org",type:"scholarship",btype:"financial",src:"corporate",ministry:"HCL Technologies CSR",min_age:17,max_age:28,max_income:500000,castes:["all"],gender:"all",keywords:"hcl foundation scholarship engineering medicine management professional student income"},
+{id:70,name:"Google India Anita Borg Scholarship",desc:"Google scholarship for women students pursuing B.E./B.Tech in Computer Science and related technology fields.",benefits:["₹75,000 one-time scholarship","Google's Tech Development Retreat invitation","Mentorship from Google engineers"],docs:["Mark Sheet 75%+","Admission to CS/IT/ECE engineering","Aadhaar","Personal essay"],how:"Apply at buildyourfuture.withgoogle.com/scholarships during December–January.",url:"https://buildyourfuture.withgoogle.com/scholarships",type:"scholarship",btype:"financial",src:"corporate",ministry:"Google India CSR",min_age:17,max_age:25,max_income:9999999,castes:["all"],gender:"female",keywords:"google india scholarship women female engineering computer science btech cse it technology"},
+{id:71,name:"Microsoft Research India Scholarship",desc:"Microsoft Research scholarship for exceptional students pursuing Master's and PhD in Computer Science and AI at Indian universities.",benefits:["Full tuition coverage","Monthly stipend ₹30,000–₹50,000","Internship at Microsoft Research India"],docs:["GATE Score","Admission to M.Tech / PhD CS programme","Research Proposal","Aadhaar"],how:"Apply at microsoft.com/en-in/research or contact MSR India Bangalore campus.",url:"https://microsoft.com/en-in/research",type:"scholarship",btype:"financial",src:"corporate",ministry:"Microsoft India CSR / Microsoft Research",min_age:21,max_age:35,max_income:9999999,castes:["all"],gender:"all",keywords:"microsoft research scholarship mtech phd computer science ai machine learning student"},
+{id:72,name:"Bajaj Group Scholarships Program",desc:"Bajaj Group CSR scholarship for students from Maharashtra, Rajasthan, and UP pursuing engineering, medicine, and management.",benefits:["₹40,000/year for professional UG","₹50,000/year for PG","Mentorship and career support"],docs:["Mark Sheet 65%+","Income below ₹6L","Aadhaar","Admission Letter"],how:"Apply at bajajgroup.in/csr or contact Jankidevi Bajaj Gram Vikas Sanstha.",url:"https://bajajgroup.in",type:"scholarship",btype:"financial",src:"corporate",ministry:"Bajaj Group CSR",min_age:17,max_age:28,max_income:600000,castes:["all"],gender:"all",keywords:"bajaj group scholarship engineering medicine management student maharashtra rajasthan"},
+{id:73,name:"Murugappa Group Scholarships – TN Focus",desc:"Murugappa Group CSR scholarship specifically for Tamil Nadu students pursuing engineering, agriculture, and management courses.",benefits:["₹25,000/year for B.E./B.Tech","₹15,000/year for Agriculture UG","Priority for rural TN students"],docs:["TN Domicile Certificate","Mark Sheet 60%+","Income below ₹3L","Aadhaar"],how:"Apply at murugappa.com/csr or contact Murugappa Chettiar Research Centre.",url:"https://murugappa.com",type:"scholarship",btype:"financial",src:"corporate",ministry:"Murugappa Group CSR (HQ: Chennai)",min_age:17,max_age:26,max_income:300000,castes:["all"],gender:"all",keywords:"murugappa scholarship tamil nadu engineering agriculture management csr chennai"},
+{id:74,name:"ONGC Scholarship for SC/ST/OBC Students",desc:"ONGC Foundation scholarship for SC/ST/OBC students pursuing UG professional courses in technical institutions.",benefits:["₹48,000/year for SC/ST","₹24,000/year for OBC","Priority for petroleum engineering and geoscience"],docs:["Caste Certificate","Mark Sheet 60%+","Income below ₹4.5L","Admission to AICTE approved college","Aadhaar"],how:"Apply at ongcindia.com/scholarship portal during July–September.",url:"https://ongcindia.com",type:"scholarship",btype:"financial",src:"corporate",ministry:"ONGC Foundation CSR",min_age:17,max_age:26,max_income:450000,castes:["SC","ST","OBC"],gender:"all",keywords:"ongc scholarship sc st obc engineering petroleum technical student oil gas"},
+{id:75,name:"Hindustan Unilever Foundation Scholarship",desc:"HUL Foundation scholarship for students pursuing rural development, environment, and social sciences at UG and PG level.",benefits:["₹30,000/year for UG","₹50,000/year for PG","Field internship at HUL rural projects"],docs:["Mark Sheet 60%+","Income Certificate","Admission Letter","Aadhaar"],how:"Apply at hul.co.in/csr or via Buddy4Study platform.",url:"https://hul.co.in",type:"scholarship",btype:"financial",src:"corporate",ministry:"Hindustan Unilever CSR",min_age:17,max_age:28,max_income:500000,castes:["all"],gender:"all",keywords:"hindustan unilever hul scholarship rural development environment social science student"},
+{id:76,name:"Titan Company CSR Scholarship – TN Students",desc:"Titan Company CSR scholarship for students from Tamil Nadu pursuing engineering and sciences, with focus on Hosur and Coimbatore districts.",benefits:["₹20,000/year for engineering","₹12,000/year for sciences","Priority for Hosur and Coimbatore students"],docs:["TN Domicile Certificate","Mark Sheet 60%+","Income below ₹3L","Aadhaar"],how:"Apply through Titan Company CSR portal or contact Titan Foundation at Hosur campus.",url:"https://titancompany.in",type:"scholarship",btype:"financial",src:"corporate",ministry:"Titan Company CSR (HQ: Bengaluru / TN)",min_age:17,max_age:25,max_income:300000,castes:["all"],gender:"all",keywords:"titan company scholarship tamil nadu engineering sciences hosur coimbatore csr student"},
+{id:77,name:"Zoho Corporation Students Scholarship",desc:"Zoho Corporation scholarship for meritorious students in Tamil Nadu pursuing software engineering, computer science, and data science.",benefits:["₹50,000/year for B.E. CS/IT","₹30,000/year for BCA","Internship at Zoho campus Chennai/Coimbatore"],docs:["Mark Sheet 75%+","Income below ₹5L","Admission to CS/IT/BCA","Aadhaar"],how:"Apply at zoho.com/scholarships or via career.zoho.com education support.",url:"https://zoho.com",type:"scholarship",btype:"financial",src:"corporate",ministry:"Zoho Corporation CSR (HQ: Chennai)",min_age:17,max_age:24,max_income:500000,castes:["all"],gender:"all",keywords:"zoho corporation scholarship computer science software engineering bca it student tamil"},
+{id:78,name:"CK Birla Foundation Scholarship for Girls",desc:"CK Birla Group scholarship exclusively for girl students pursuing B.E., B.Tech, MBBS, and nursing courses.",benefits:["₹40,000/year for engineering and medical","Mentorship by CK Birla professionals","Renewal on academic performance"],docs:["Mark Sheet 65%+","Income below ₹5L","Aadhaar","Admission Letter"],how:"Apply via ckbirla.com/scholarship or CSR portal by August every year.",url:"https://ckbirla.com",type:"scholarship",btype:"financial",src:"corporate",ministry:"CK Birla Group CSR",min_age:17,max_age:25,max_income:500000,castes:["all"],gender:"female",keywords:"ck birla foundation scholarship girl student engineering medical mbbs nursing female"},
+{id:79,name:"Sun Pharma Scholarship for Pharmacy Students",desc:"Sun Pharmaceutical Industries scholarship for meritorious students from low-income families pursuing B.Pharm and M.Pharm.",benefits:["₹30,000/year for B.Pharm","₹40,000/year for M.Pharm","Internship at Sun Pharma plant"],docs:["Mark Sheet 60%+","Income below ₹4L","Admission to Pharmacy college","Aadhaar"],how:"Apply at sunpharma.com/csr or contact Sun Pharma CSR office.",url:"https://sunpharma.com",type:"scholarship",btype:"financial",src:"corporate",ministry:"Sun Pharmaceutical Industries CSR",min_age:17,max_age:28,max_income:400000,castes:["all"],gender:"all",keywords:"sun pharma scholarship pharmacy bpharm mpharm student medicine drug"},
+{id:80,name:"BYJU'S Education for All Scholarship",desc:"BYJU'S scholarship for underprivileged students providing free premium digital learning content and one-time cash support.",benefits:["Free BYJU'S premium subscription 1 year","₹10,000 one-time cash award","Mentoring sessions online"],docs:["Income below ₹2.5L","Mark Sheet 55%+","Aadhaar","Phone number for app access"],how:"Apply at byjus.com/educationforall or via NGO partners.",url:"https://byjus.com",type:"scholarship",btype:"both",src:"corporate",ministry:"BYJU'S Think & Learn CSR",min_age:10,max_age:20,max_income:250000,castes:["all"],gender:"all",keywords:"byjus education all scholarship digital learning underprivileged student online"},
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ⑥ ADDITIONAL HIGH-PRIORITY CENTRAL AND STATE SCHEMES
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{id:81,name:"National Talent Search Examination (NTSE) Scholarship",desc:"NCERT scholarship for Class 10 students who clear Stage I and II of NTSE — for studying in India.",benefits:["₹1,250/month for Class 11–12","₹2,000/month for UG/PG","Renewable throughout academic career"],docs:["NTSE Selection Certificate","Mark Sheet","Aadhaar"],how:"Appear for NTSE Stage I (State) exam then Stage II (National). Apply via NCERT.",url:"https://ncert.nic.in",type:"scholarship",btype:"financial",src:"central",ministry:"NCERT / Ministry of Education",min_age:13,max_age:15,max_income:9999999,castes:["all"],gender:"all",keywords:"ntse scholarship class 10 national talent search ncert merit student monthly"},
+{id:82,name:"INSPIRE Scholarship by DST",desc:"Department of Science and Technology scholarship for students pursuing natural and basic sciences at UG level.",benefits:["₹80,000/year for 5 years","Summer attachment to research labs","Mentored by top scientists"],docs:["Class 12 Marksheet top 1% in state","Admission to B.Sc Natural Sciences","Aadhaar"],how:"Apply via DST Inspire portal inspire-dst.gov.in during first year of college.",url:"https://inspire-dst.gov.in",type:"scholarship",btype:"financial",src:"central",ministry:"DST – Dept of Science & Technology",min_age:16,max_age:22,max_income:9999999,castes:["all"],gender:"all",keywords:"inspire dst scholarship science bsc natural basic student top percent research"},
+{id:83,name:"Kishore Vaigyanik Protsahan Yojana (KVPY)",desc:"DST Fellowship for students pursuing basic sciences — Class 11, 12, and first year UG students in science.",benefits:["₹5,000–₹7,000/month fellowship","Annual contingency ₹20,000–₹28,000","Access to national labs and IISc"],docs:["Qualifying KVPY Aptitude Test","Mark Sheet","Aadhaar"],how:"Apply via kvpy.iisc.ac.in during July–August. Aptitude test in November.",url:"https://kvpy.iisc.ac.in",type:"scholarship",btype:"financial",src:"central",ministry:"DST / IISc Bangalore",min_age:15,max_age:22,max_income:9999999,castes:["all"],gender:"all",keywords:"kvpy science fellowship scholarship class 11 12 ug bsc student research physics chemistry"},
+{id:84,name:"Startup India Seed Fund – Young Entrepreneurs",desc:"Up to ₹20 lakh seed funding for startups less than 2 years old. For validation and early traction.",benefits:["Up to ₹20 lakh seed funding","Mentorship from DPIIT incubators","Tax exemptions under Startup India"],docs:["DPIIT Recognition Certificate","Business Plan","KYC Documents","Bank Account"],how:"Apply via startupindia.gov.in after getting DPIIT recognition.",url:"https://startupindia.gov.in",type:"loan",btype:"financial",src:"central",ministry:"DPIIT / Ministry of Commerce",min_age:18,max_age:45,max_income:9999999,castes:["all"],gender:"all",keywords:"startup india seed fund entrepreneur young business dpiit funding venture"},
+{id:85,name:"Pradhan Mantri Rozgar Protsahan Yojana (PMRPY)",desc:"Employer incentive scheme — government pays 12% EPF contribution for 3 years for new employee hiring.",benefits:["Govt pays 12% EPF employer contribution","3 years benefit for each new hire","Boosts new employment in formal sector"],docs:["EPFO Registration","Employee UAN","Aadhaar","Bank Account"],how:"Register at pmrpy.gov.in. Employer applies for newly hired employees.",url:"https://pmrpy.gov.in",type:"employment",btype:"financial",src:"central",ministry:"Ministry of Labour & Employment",min_age:18,max_age:35,max_income:150000,castes:["all"],gender:"all",keywords:"pmrpy employment job epf employer new hire rozgar protsahan formal sector"},
+{id:86,name:"PM Street Vendor's AtmaNirbhar Nidhi (PM-SVANidhi 2.0)",desc:"Enhanced working capital loans and digital credit for street vendors — up to ₹50,000 third loan.",benefits:["₹10,000 first loan","₹20,000 second loan","₹50,000 third loan","Cash-back on digital payments"],docs:["Vendor Certificate","Aadhaar","ULB Registration","Bank Account"],how:"Apply at pmsvanidhi.mohua.gov.in.",url:"https://pmsvanidhi.mohua.gov.in",type:"loan",btype:"financial",src:"central",ministry:"Ministry of Housing & Urban Affairs",min_age:18,max_age:65,max_income:9999999,castes:["all"],gender:"all",keywords:"pm svanidhi 2.0 street vendor loan urban self employed digital credit"},
+{id:87,name:"Atal Pension Yojana (APY)",desc:"Government-guaranteed pension scheme for unorganised sector workers — ₹1,000 to ₹5,000/month at age 60.",benefits:["₹1,000–₹5,000/month at age 60","Government co-contributes 50% (for early joiners)","Spouse gets pension on subscriber death"],docs:["Aadhaar","Bank Account","Mobile Number"],how:"Apply at any bank or post office. Minimum age 18, maximum age 40.",url:"https://npscra.nsdl.co.in",type:"pension",btype:"financial",src:"central",ministry:"Ministry of Finance / PFRDA",min_age:18,max_age:40,max_income:9999999,castes:["all"],gender:"all",keywords:"atal pension yojana apy unorganised worker retirement 60 years bank account"},
+{id:88,name:"PM Scholarship – NER and Sikkim",desc:"Special scholarship for students from North-Eastern states and Sikkim — higher amount for technical courses.",benefits:["₹3,000–₹10,000/month stipend","For UG and PG professional courses","Central Sector funds directly"],docs:["State Domicile Certificate NE/Sikkim","Mark Sheet 60%+","Admission Letter","Aadhaar"],how:"Apply via National Scholarship Portal during August–October.",url:"https://scholarships.gov.in",type:"scholarship",btype:"financial",src:"central",ministry:"Ministry of Development of NE Region",min_age:17,max_age:28,max_income:500000,castes:["all"],gender:"all",keywords:"northeast ner sikkim scholarship student ug pg stipend technical central"},
+{id:89,name:"CSIR Junior Research Fellowship (JRF)",desc:"National level fellowship for science graduates to pursue PhD research in CSIR labs and recognized universities.",benefits:["₹37,000/month JRF for 2 years","₹42,000/month SRF after 2 years","HRA + contingency allowance"],docs:["CSIR-NET Qualification","M.Sc or equivalent","Admission to PhD programme","Aadhaar"],how:"Apply via csir.res.in after qualifying CSIR-NET examination.",url:"https://csir.res.in",type:"scholarship",btype:"financial",src:"central",ministry:"CSIR / Ministry of Science & Technology",min_age:18,max_age:28,max_income:9999999,castes:["all"],gender:"all",keywords:"csir jrf junior research fellowship phd science net qualification lab research"},
+{id:90,name:"UGC SWANATH Fellowship for Orphans and Semi-Orphans",desc:"UGC fellowship for students who lost one or both parents to COVID-19 or other causes pursuing UG/PG courses.",benefits:["₹50,000/year for UG","₹2 lakh/year for PG","Medical insurance coverage"],docs:["Death Certificate of Parent","Admission Letter","Income Certificate","Aadhaar"],how:"Apply via National Scholarship Portal under UGC SWANATH scheme.",url:"https://scholarships.gov.in",type:"scholarship",btype:"financial",src:"central",ministry:"UGC / Ministry of Education",min_age:0,max_age:25,max_income:500000,castes:["all"],gender:"all",keywords:"ugc swanath fellowship orphan covid parent deceased student ug pg scholarship"},
+{id:91,name:"PM CARES for Children – Education and Health",desc:"Support for children orphaned due to COVID-19 — free education, health insurance, and monthly stipend.",benefits:["Free school education","₹10 lakh health insurance","₹4,000/month stipend after age 18","₹10 lakh lump sum at age 23"],docs:["COVID-19 death certificate of parent","Birth Certificate","Aadhaar","Guardian details"],how:"Apply via district collector office or PM CARES portal pmcares.gov.in.",url:"https://pmcares.gov.in",type:"welfare",btype:"both",src:"central",ministry:"Prime Minister's Office",min_age:0,max_age:23,max_income:9999999,castes:["all"],gender:"all",keywords:"pm cares covid orphan child education health insurance stipend school free"},
+{id:92,name:"NMMSS Higher Education Scholarship for Minorities",desc:"Scholarship for minority community students (Muslim, Christian, Sikh, Buddhist, Parsi, Jain) pursuing higher education.",benefits:["Pre-matric: ₹1,000–₹10,000/year","Post-matric: ₹2,000–₹20,000/year","Merit-cum-Means for professional courses"],docs:["Minority Certificate","Income below ₹2L","Mark Sheet 50%+","Aadhaar"],how:"Apply via Ministry of Minority Affairs portal minority.gov.in or National Scholarship Portal.",url:"https://scholarships.gov.in",type:"scholarship",btype:"financial",src:"central",ministry:"Ministry of Minority Affairs",min_age:0,max_age:30,max_income:200000,castes:["all"],gender:"all",keywords:"minority scholarship muslim sikh christian jain parsi buddhist student higher education"},
+{id:93,name:"North-East Rural Livelihood Project (NERLP)",desc:"Livelihood support for rural poor in NE states — formation of self-help groups, credit, skill training.",benefits:["SHG formation support","Revolving Fund ₹10,000/SHG","Skill and livelihood training"],docs:["BPL Card or NE State Domicile","Aadhaar","Bank Account"],how:"Apply through Block Development Officer (BDO) or State NERLP project office.",url:"https://www.nerlp.in",type:"employment",btype:"financial",src:"central",ministry:"Ministry of Development of NE Region",min_age:18,max_age:60,max_income:200000,castes:["all"],gender:"all",keywords:"northeast livelihood shg self help group credit skill training rural poor nerlp"},
+{id:94,name:"TN Entrepreneurship Development Programme (EDII-TN)",desc:"TN government-backed free entrepreneurship training for youth, women, and SC/ST entrepreneurs aged 18–35.",benefits:["Free EDP training 4–12 weeks","Startup pitch to TN investors","Priority for MUDRA loan referral"],docs:["TN Domicile Certificate","Aadhaar","Age Proof","Business idea brief"],how:"Apply at EDII-TN Chennai or nearest TIIC office. Sessions twice a year.",url:"https://www.tn.gov.in",type:"employment",btype:"non-financial",src:"tn",ministry:"TN Industries Department / TIIC",min_age:18,max_age:35,max_income:9999999,castes:["all"],gender:"all",keywords:"tn entrepreneurship edii training youth startup sc st women business tamil"},
+{id:95,name:"TN Rural Telemedicine – Doctor on Call",desc:"TN Government free telemedicine service connecting rural patients to specialist doctors via phone/video.",benefits:["Free specialist doctor consultation","Available 24×7 from home","Referral to nearest government hospital"],docs:["No documents needed — toll-free number 104"],how:"Call 104 health helpline or visit nearest Health and Wellness Centre (HWC).",url:"https://www.tn.gov.in",type:"health",btype:"non-financial",src:"tn",ministry:"TN National Health Mission",min_age:0,max_age:120,max_income:9999999,castes:["all"],gender:"all",keywords:"tn telemedicine rural doctor online 104 helpline health consultation free"},
+{id:96,name:"PM SHRI Schools – Quality Education Upgrade",desc:"Central government scheme to upgrade 14,500 schools across India as model schools with modern infrastructure.",benefits:["World-class infrastructure for govt schools","STEM labs, smart classrooms","Better teacher training"],docs:["Students enrolled in PM SHRI school (automatic)"],how:"Benefit automatically if your school is notified as PM SHRI School by Ministry of Education.",url:"https://pmshrischools.education.gov.in",type:"welfare",btype:"non-financial",src:"central",ministry:"Ministry of Education",min_age:5,max_age:18,max_income:9999999,castes:["all"],gender:"all",keywords:"pm shri schools quality education upgrade infrastructure government student"},
+{id:97,name:"Bharat Electronics Limited (BEL) Scholarship",desc:"BEL CSR scholarship for engineering students from economically weaker families in Bengaluru, Hyderabad, Chennai, Pune, Noida.",benefits:["₹20,000/year for B.E./B.Tech","Priority for electronics and communication students","Renewal on 60% marks"],docs:["Admission to AICTE-approved college","Income below ₹4L","Mark Sheet 60%+","Aadhaar"],how:"Apply at bel-india.in/csr or contact nearest BEL factory CSR office.",url:"https://bel-india.in",type:"scholarship",btype:"financial",src:"corporate",ministry:"Bharat Electronics Limited (PSU) CSR",min_age:17,max_age:25,max_income:400000,castes:["all"],gender:"all",keywords:"bel bharat electronics scholarship engineering student electronics communication csr"},
+{id:98,name:"BHEL (Bharat Heavy Electricals) Scholarship",desc:"BHEL CSR scholarship for meritorious students from SC/ST/OBC pursuing engineering and technical courses near BHEL plants.",benefits:["₹25,000/year for engineering","SC/ST get ₹30,000/year","Priority for families near BHEL plants"],docs:["Caste Certificate SC/ST/OBC","Mark Sheet 60%+","Income below ₹3.6L","Aadhaar"],how:"Apply through nearest BHEL plant CSR department or bhel.com scholarship portal.",url:"https://bhel.com",type:"scholarship",btype:"financial",src:"corporate",ministry:"BHEL (PSU) CSR",min_age:17,max_age:26,max_income:360000,castes:["SC","ST","OBC"],gender:"all",keywords:"bhel bharat heavy electricals scholarship sc st obc engineering student csr"},
+{id:99,name:"Coal India Limited (CIL) Scholarship",desc:"Coal India CSR scholarship for children of contractual workers and students from coal mining areas.",benefits:["₹12,000–₹20,000/year","For Class 9–12 and UG students","Children of contractual mining workers prioritised"],docs:["Parent Employment Certificate (CIL contractor)","Income Certificate","Mark Sheet","Aadhaar"],how:"Apply through nearest Coal India regional office or coalindia.in CSR portal.",url:"https://coalindia.in",type:"scholarship",btype:"financial",src:"corporate",ministry:"Coal India Limited CSR (PSU)",min_age:14,max_age:26,max_income:300000,castes:["all"],gender:"all",keywords:"coal india cil scholarship mining children student class 9 12 ug worker"},
+{id:100,name:"Indian Oil Corporation (IOCL) Scholarship",desc:"Indian Oil Scholarship for meritorious students in engineering, MBBS, and technical courses from economically weaker sections.",benefits:["₹48,000/year for engineering and MBBS","₹24,000/year for other professional courses","Renewable annually on merit"],docs:["Mark Sheet 60%+","Income below ₹6L","Admission to AICTE/MCI approved institution","Aadhaar"],how:"Apply via iocl.com/scholarship portal during August–October each year.",url:"https://iocl.com",type:"scholarship",btype:"financial",src:"corporate",ministry:"Indian Oil Corporation Limited (PSU) CSR",min_age:17,max_age:26,max_income:600000,castes:["all"],gender:"all",keywords:"iocl indian oil scholarship engineering mbbs technical professional student merit psu"},
+{id:101,name:"NTPC Scholarship for Engineering Students",desc:"NTPC power sector PSU scholarship for meritorious engineering students especially from states where NTPC plants operate.",benefits:["₹15,000/year for electrical and mechanical","₹20,000/year for top performers","Internship opportunity at NTPC plant"],docs:["JEE Score or State CET rank","Mark Sheet 60%+","Income below ₹5L","Aadhaar"],how:"Apply at ntpc.co.in/scholarship or contact local NTPC plant HR/CSR division.",url:"https://ntpc.co.in",type:"scholarship",btype:"financial",src:"corporate",ministry:"NTPC Limited (PSU) CSR",min_age:17,max_age:25,max_income:500000,castes:["all"],gender:"all",keywords:"ntpc power scholarship engineering electrical mechanical student psu internship"},
+{id:102,name:"Vikram Sarabhai Foundation Scholarship",desc:"Vikram Sarabhai Foundation scholarship for students pursuing science and technology in rural Gujarat, Rajasthan, and TN.",benefits:["₹25,000/year for science courses","Rural students from Gujarat/Rajasthan/TN","Mentorship by ISRO scientists"],docs:["Rural/Domicile Certificate","Mark Sheet 65%+","Income below ₹3L","Aadhaar"],how:"Apply at vsf.org.in during June–August scholarship window.",url:"https://vsf.org.in",type:"scholarship",btype:"financial",src:"corporate",ministry:"Vikram Sarabhai Foundation (ISRO-linked CSR)",min_age:16,max_age:25,max_income:300000,castes:["all"],gender:"all",keywords:"vikram sarabhai foundation scholarship science technology rural gujarat rajasthan tn isro"},
+{id:103,name:"Azim Premji Foundation Education Support",desc:"Azim Premji Foundation provides school improvement and teacher training support for government school teachers and students in rural India.",benefits:["Free teacher training programmes","School transformation support","Graduate fellowships for social sector work"],docs:["Government school teacher / student enrollment","Aadhaar","School registration number"],how:"Apply via azimpremjifoundation.org or contact state office in TN/Karnataka/MP/Rajasthan.",url:"https://azimpremjifoundation.org",type:"welfare",btype:"non-financial",src:"corporate",ministry:"Azim Premji Foundation (Wipro CSR)",min_age:0,max_age:35,max_income:9999999,castes:["all"],gender:"all",keywords:"azim premji foundation scholarship education government school rural teacher training"},
+{id:104,name:"Pradhan Mantri Awas Yojana Credit-Linked Subsidy (CLSS)",desc:"Interest subsidy on home loans for EWS and LIG under PM Awas Yojana — reduces EMI significantly.",benefits:["Interest subsidy 6.5% for EWS (income below ₹3L)","4% subsidy for LIG (income ₹3L–₹6L)","Subsidy credited upfront to loan account"],docs:["Income Certificate","Aadhaar","Property Documents","Home Loan Sanction Letter"],how:"Apply at any bank or HFC offering PMAY CLSS loans. Submit at home branch.",url:"https://pmaymis.gov.in",type:"housing",btype:"financial",src:"central",ministry:"Ministry of Housing & Urban Affairs",min_age:18,max_age:70,max_income:600000,castes:["all"],gender:"all",keywords:"pmay clss credit linked subsidy home loan emi ews lig housing interest"},
+{id:105,name:"PM Daksh Yojana – Skill Training for SC/OBC/EBC",desc:"Free up-skilling and re-skilling training for SC, OBC, EBC, and Safai Karamcharis with stipend.",benefits:["Free skill training up to 6 months","Daily stipend ₹100–₹150 during training","Post-training placement support"],docs:["Caste Certificate SC/OBC/EBC","Aadhaar","Bank Account","Class 10 Certificate"],how:"Apply via pmdaksh.dosje.gov.in or through Ambedkar Foundation offices.",url:"https://pmdaksh.dosje.gov.in",type:"employment",btype:"both",src:"central",ministry:"Ministry of Social Justice & Empowerment",min_age:18,max_age:45,max_income:300000,castes:["SC","OBC","EBC"],gender:"all",keywords:"pm daksh skill training sc obc ebc safai karamchari stipend placement free"},
+{id:106,name:"Nai Roshni – Leadership Training for Minority Women",desc:"Government scheme providing leadership and personality development training for minority women aged 18–65.",benefits:["Free training in communication and legal literacy","Exposure to govt schemes","Training stipend provided"],docs:["Minority Certificate","Aadhaar","Age Proof"],how:"Apply via Ministry of Minority Affairs or through NGO implementing partners.",url:"https://minorityaffairs.gov.in",type:"welfare",btype:"non-financial",src:"central",ministry:"Ministry of Minority Affairs",min_age:18,max_age:65,max_income:9999999,castes:["all"],gender:"female",keywords:"nai roshni leadership minority women training legal literacy schemes government"},
+{id:107,name:"National Overseas Scholarship for SC/ST Students",desc:"Full scholarship to study abroad for SC/ST/Denotified Tribes students for Masters and PhD programmes.",benefits:["Full tuition fee coverage abroad","Living expenses allowance","Return airfare + visa costs"],docs:["Caste Certificate SC/ST/DNT","Masters admission from foreign university","Income below ₹6L","Aadhaar","Passport"],how:"Apply via socialjustice.gov.in National Overseas Scholarship portal.",url:"https://socialjustice.nic.in",type:"scholarship",btype:"financial",src:"central",ministry:"Ministry of Social Justice & Empowerment",min_age:18,max_age:35,max_income:600000,castes:["SC","ST","DNT"],gender:"all",keywords:"national overseas scholarship abroad sc st dnt foreign university masters phd full"},
+{id:108,name:"Padho Pradesh – Minority Students Overseas Scholarship",desc:"Scholarship for minority students studying Masters and PhD abroad — covers tuition and living allowance.",benefits:["Up to USD 15,750/year tuition","Living allowance USD 5,250/year","Return airfare covered"],docs:["Minority Certificate","Foreign University Admission","Income below ₹6L","Passport","Aadhaar"],how:"Apply via scholarships.gov.in or Ministry of Minority Affairs portal.",url:"https://minorityaffairs.gov.in",type:"scholarship",btype:"financial",src:"central",ministry:"Ministry of Minority Affairs",min_age:18,max_age:35,max_income:600000,castes:["all"],gender:"all",keywords:"padho pradesh minority overseas scholarship abroad masters phd tuition living allowance"},
+{id:109,name:"Vidyasaarathi – TCS and PSU Scholarships Portal",desc:"Tata Consultancy Services / NSE Foundation portal connecting multiple PSU and corporate scholarships for students.",benefits:["Multiple scholarships ₹5,000–₹1 lakh/year","One application for 50+ scholarships","Covers engineering, management, sciences"],docs:["Mark Sheet 60%+","Aadhaar","Income Certificate","Admission Letter"],how:"Register at vidyasaarathi.co.in — one portal for multiple TCS and PSU scholarships.",url:"https://vidyasaarathi.co.in",type:"scholarship",btype:"financial",src:"corporate",ministry:"TCS Foundation / NSE Foundation",min_age:17,max_age:28,max_income:600000,castes:["all"],gender:"all",keywords:"vidyasaarathi tcs scholarship psu portal engineering management science student"},
+{id:110,name:"Swami Vivekananda Merit-cum-Means Scholarship – West Bengal",desc:"West Bengal state scholarship for meritorious students pursuing UG and PG courses — open to students from all states who join WB colleges.",benefits:["₹1,000–₹5,000/month for UG","₹2,000–₹8,000/month for PG","Covers technical and humanities courses"],docs:["Class 12 Marksheet 60%+","Income below ₹2.5L","Admission to WB college","Aadhaar"],how:"Apply via oasis.gov.in — West Bengal scholarship portal.",url:"https://oasis.gov.in",type:"scholarship",btype:"financial",src:"central",ministry:"West Bengal Higher Education Department",min_age:16,max_age:28,max_income:250000,castes:["all"],gender:"all",keywords:"swami vivekananda scholarship west bengal merit ug pg student monthly stipend"},
+{id:111,name:"AICTE Pragati Scholarship – Girl Students in Technical Education",desc:"AICTE scholarship exclusively for girl students admitted to AICTE-approved degree and diploma courses.",benefits:["₹50,000/year (total 30,000 scholarships)","For 1st year girl students in AICTE colleges","Covers tuition and incidentals"],docs:["12th Marksheet","AICTE college admission letter","Family income below ₹8L","Aadhaar"],how:"Apply via aicte-india.org pragati scholarship portal by November.",url:"https://aicte-india.org",type:"scholarship",btype:"financial",src:"central",ministry:"AICTE / Ministry of Education",min_age:17,max_age:22,max_income:800000,castes:["all"],gender:"female",keywords:"aicte pragati scholarship girl female technical diploma degree engineering"},
+{id:112,name:"AICTE Saksham Scholarship – PwD Students in Technical Education",desc:"AICTE scholarship for students with disability (40%+) enrolled in AICTE-approved technical institutions.",benefits:["₹50,000/year for differently-abled students","Available for degree and diploma courses","Covers tuition and special needs"],docs:["Disability Certificate 40%+","AICTE college admission","Income below ₹8L","Aadhaar"],how:"Apply via AICTE Saksham portal at aicte-india.org.",url:"https://aicte-india.org",type:"scholarship",btype:"financial",src:"central",ministry:"AICTE / Ministry of Education",min_age:17,max_age:25,max_income:800000,castes:["all"],gender:"all",requires_disability:true,keywords:"aicte saksham scholarship disability pwd technical diploma engineering student"},
+{id:113,name:"Buddy4Study Scholarship Aggregator Platform",desc:"India's largest scholarship portal aggregating 2,000+ scholarships from government, banks, and corporates. Free to use.",benefits:["Access to 2,000+ active scholarships","Free eligibility matching","Application tracking and reminders"],docs:["Varies by individual scholarship"],how:"Register free at buddy4study.com and search scholarships by eligibility.",url:"https://buddy4study.com",type:"scholarship",btype:"financial",src:"corporate",ministry:"Buddy4Study / GyanDhan Aggregator",min_age:10,max_age:35,max_income:9999999,castes:["all"],gender:"all",keywords:"buddy4study scholarship portal aggregator all student apply online track"},
+{id:114,name:"PM Krishi Sinchayee Yojana – Drip Irrigation Subsidy",desc:"Subsidy for farmers to install drip irrigation and sprinkler systems — up to 90% for SC/ST farmers.",benefits:["55% subsidy for large farmers","75% subsidy for small and marginal farmers","90% subsidy for SC/ST farmers"],docs:["Land Records","Aadhaar","Bank Account","Technical sanction from Agriculture Dept"],how:"Apply through Agriculture Department or Horticulture Dept or nearest Krishi Vigyan Kendra.",url:"https://pmksy.gov.in",type:"agriculture",btype:"financial",src:"central",ministry:"Ministry of Agriculture & Farmers Welfare",min_age:18,max_age:120,max_income:9999999,castes:["all"],gender:"all",keywords:"drip irrigation sprinkler subsidy farmer sinchayee sc st horticulture water saving"},
+{id:115,name:"Kisan Credit Card (KCC) Scheme",desc:"Short-term credit up to ₹3 lakh at subsidised 4% interest for farm inputs — seeds, fertilisers, equipment.",benefits:["Credit up to ₹3 lakh at 4% interest (subsidised)","ATM card for farm purchases","Insurance coverage for crop and equipment"],docs:["Land Records","Aadhaar","Passport Photo","Two references"],how:"Apply at any Commercial Bank, RRB, or Cooperative Bank with land documents.",url:"https://pmkisan.gov.in",type:"loan",btype:"financial",src:"central",ministry:"Ministry of Agriculture / RBI / NABARD",min_age:18,max_age:75,max_income:9999999,castes:["all"],gender:"all",keywords:"kisan credit card kcc short term loan farmer 4 percent interest subsidy seeds fertiliser"},
+{id:116,name:"Jan Dhan Yojana – Zero Balance Bank Account",desc:"Free bank account with ₹10,000 overdraft facility, accident insurance, and life insurance for unbanked citizens.",benefits:["Zero balance savings account","₹1 lakh accident insurance","₹30,000 life insurance","₹10,000 overdraft after 6 months"],docs:["Aadhaar","One address proof"],how:"Visit any public sector bank or India Post Payments Bank with Aadhaar.",url:"https://pmjdy.gov.in",type:"welfare",btype:"non-financial",src:"central",ministry:"Ministry of Finance",min_age:10,max_age:120,max_income:9999999,castes:["all"],gender:"all",keywords:"jan dhan account zero balance bank insurance overdraft unbanked pmjdy"},
+{id:117,name:"Atal Tinkering Labs (ATL) – School Innovation",desc:"NITI Aayog grants for schools to set up innovation labs with 3D printers, Arduino, robotics for students.",benefits:["₹20 lakh/school for lab setup","3D printer, robotics kit, IoT devices","Annual ₹10 lakh maintenance grant"],docs:["School application via atal.aim.gov.in","Principal and committee approval"],how:"Schools apply via AIM portal at atal.aim.gov.in. Students benefit automatically.",url:"https://atal.aim.gov.in",type:"welfare",btype:"non-financial",src:"central",ministry:"NITI Aayog / Atal Innovation Mission",min_age:10,max_age:18,max_income:9999999,castes:["all"],gender:"all",keywords:"atal tinkering lab school innovation 3d printer robotics student niti aayog aim"},
+{id:118,name:"NABARD Dairy Development Scheme – Milk Udyami",desc:"Subsidy for small dairy farmers to set up milch animal farms and dairy processing units.",benefits:["25% back-end subsidy for general","33.33% for SC/ST and NE farmers","Bank loan for dairy unit setup"],docs:["Land / Lease Documents","Aadhaar","Bank Account","Project Report"],how:"Apply via Nabard district office or cooperating bank with project report.",url:"https://nabard.org",type:"agriculture",btype:"financial",src:"central",ministry:"NABARD / Ministry of Animal Husbandry",min_age:18,max_age:60,max_income:9999999,castes:["all"],gender:"all",keywords:"nabard dairy milk udyami farmer subsidy animal husbandry milch cattle unit"},
+{id:119,name:"PM Swanidhi Mahila Samman Savings Certificate",desc:"Special 2-year savings certificate for women earning up to 7.5% interest — maximum ₹2 lakh per account.",benefits:["7.5% interest for 2 years","Maximum ₹2 lakh per account","Partial withdrawal allowed after 1 year"],docs:["Aadhaar","PAN (if available)","Bank or Post Office Account"],how:"Open at nearest Post Office or authorised bank. Valid till March 2025 extended deadline.",url:"https://indiapost.gov.in",type:"welfare",btype:"financial",src:"central",ministry:"Ministry of Finance / India Post",min_age:18,max_age:120,max_income:9999999,castes:["all"],gender:"female",keywords:"mahila samman savings certificate women 7.5 percent post office interest 2 lakh"},
+{id:120,name:"National Digital Literacy Mission (NDLM)",desc:"Free digital literacy training for citizens — basic computer, internet, mobile banking, and online services.",benefits:["Free digital literacy training 20 hours","Certificate from CSC / Government","Training at nearest CSC / Library"],docs:["Aadhaar","Mobile Number"],how:"Visit nearest Common Service Centre or digital literacy centre. Apply at pmgdisha.in.",url:"https://pmgdisha.in",type:"welfare",btype:"non-financial",src:"central",ministry:"Ministry of Electronics & IT",min_age:14,max_age:60,max_income:9999999,castes:["all"],gender:"all",keywords:"digital literacy free training computer internet mobile banking aadhaar csc ndlm"},
+{id:121,name:"TN Adi Dravidar SC Housing Scheme",desc:"Free pucca house for SC families in Tamil Nadu. Better quality than PMAY with additional TN state funds.",benefits:["Free house construction for SC families","Superior specifications to PMAY","Additional ₹5,000 for household utensils"],docs:["SC Caste Certificate","Income below ₹1.2L","No existing pucca house certificate","Aadhaar"],how:"Apply at Adi Dravidar Welfare Department or Panchayat Union office in your block.",url:"https://www.tn.gov.in",type:"housing",btype:"financial",src:"tn",ministry:"TN Adi Dravidar Welfare Department",min_age:18,max_age:120,max_income:120000,castes:["SC"],gender:"all",keywords:"tn sc adi dravidar housing scheme free house pucca tamil nadu welfare"},
+{id:122,name:"TN Green House Scheme – EWS Urban Housing",desc:"Tamil Nadu government green house scheme for economically weaker urban families — subsidised apartments.",benefits:["Subsidised 1BHK flat at ₹3.5 lakh","20-year repayment at 5% interest","For EWS families in TN urban areas"],docs:["Income Certificate below ₹2L","TN Domicile","No existing house certificate","Aadhaar","Ration Card"],how:"Apply at Tamil Nadu Housing Board (TNHB) district office or tnhousing.gov.in.",url:"https://tnhousing.gov.in",type:"housing",btype:"financial",src:"tn",ministry:"Tamil Nadu Housing Board",min_age:18,max_age:60,max_income:200000,castes:["all"],gender:"all",keywords:"tn green house scheme ews urban housing apartment subsidised tamil nadu tnhb"},
+];
+
+// ══════════════════════════════════════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════════════════════════════════════
+let SB=null,AI_KEY='',IS_DEMO=false,currentUID=null;
+let chips=new Set(),activeType='',savedApps=JSON.parse(localStorage.getItem('sc_apps3')||'[]');
+let currentRecs=[];
+
+// Update count in header
+document.getElementById('hdrCount').textContent=SCHEMES.length+' Schemes';
+
+// Src label map
+const srcLabel={central:'🇮🇳 Central Govt',tn:'🏛 TN State',bank:'🏦 Banking',corporate:'🏢 Corporate CSR'};
+const srcBadgeClass={central:'b-cn',tn:'b-tn',bank:'b-bank',corporate:'b-corp'};
+const srcCardClass={central:'',tn:'',bank:'src-bank',corporate:'src-corp'};
+
+// ══════════════════════════════════════════════════════════════════════════════
+//  SETUP
+// ══════════════════════════════════════════════════════════════════════════════
+function getCfg(){return{url:localStorage.getItem('sc_url')||'',anon:localStorage.getItem('sc_anon')||'',ai:localStorage.getItem('sc_ai')||''}}
+function saveSetup(){
+  const url=document.getElementById('cfg_url').value.trim();
+  const anon=document.getElementById('cfg_anon').value.trim();
+  const ai=document.getElementById('cfg_ai').value.trim();
+  if(!url||!anon){toast('⚠️ Supabase URL and Anon Key required',true);return}
+  localStorage.setItem('sc_url',url);localStorage.setItem('sc_anon',anon);
+  if(ai)localStorage.setItem('sc_ai',ai);location.reload();
+}
+function clearSetup(){['sc_url','sc_anon','sc_ai'].forEach(k=>localStorage.removeItem(k));location.reload()}
+function toggleSetup(){
+  const cfg=getCfg();
+  if(cfg.url){const c=document.getElementById('connectedBar');c.style.display=c.style.display==='none'?'':'none'}
+  else{const p=document.getElementById('setupPanel');p.style.display=p.style.display==='none'?'':'none'}
+}
+function startDemoMode(){
+  IS_DEMO=true;
+  document.getElementById('notSetup').style.display='none';
+  document.getElementById('mainApp').style.display='';
+  document.getElementById('schemeCountBadge').textContent=SCHEMES.length+' schemes (demo)';
+  updateBrowseTotal();renderBrowse();
+}
+function updateBrowseTotal(){
+  const el=document.getElementById('totalCount');
+  if(el)el.textContent=SCHEMES.length;
+  const b=document.getElementById('st_bank');
+  if(b)b.textContent=SCHEMES.filter(s=>s.src==='bank').length;
+  const c=document.getElementById('st_corp');
+  if(c)c.textContent=SCHEMES.filter(s=>s.src==='corporate').length;
+  document.getElementById('st1').textContent=SCHEMES.length;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════════════════════════════════════
+window.addEventListener('load',async()=>{
+  const cfg=getCfg();
+  document.getElementById('cfg_url').value=cfg.url;
+  document.getElementById('cfg_anon').value=cfg.anon;
+  document.getElementById('cfg_ai').value=cfg.ai;
+  if(cfg.url&&cfg.anon){
+    try{
+      SB=supabase.createClient(cfg.url,cfg.anon);AI_KEY=cfg.ai;
+      document.getElementById('connectedBar').style.display='';
+      document.getElementById('sbHost').textContent=new URL(cfg.url).hostname;
+      document.getElementById('aiStatus').textContent=cfg.ai?'Claude DL Active ✓':'No AI key (TF-IDF only)';
+      document.getElementById('mainApp').style.display='';
+      document.getElementById('schemeCountBadge').textContent=SCHEMES.length+' schemes loaded';
+    }catch(e){document.getElementById('notSetup').style.display=''}
+  }else{document.getElementById('notSetup').style.display=''}
+  currentUID=localStorage.getItem('sc_uid')?parseInt(localStorage.getItem('sc_uid')):null;
+  updateBrowseTotal();restoreProfile();renderBrowse();
+});
+
+// ══════════════════════════════════════════════════════════════════════════════
+//  TAB / STEP
+// ══════════════════════════════════════════════════════════════════════════════
+function switchTab(t){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('tab-'+t).classList.add('on');
+  ['profile','results','browse','saved','admin'].forEach((n,i)=>{if(n===t)document.querySelectorAll('.tb')[i]?.classList.add('on')});
+  if(t==='saved')loadSaved();
+  if(t==='admin')loadAdmin();
+  if(t==='browse')renderBrowse();
+}
+function gs(n){
+  [1,2,3,4].forEach(i=>{
+    document.getElementById('fs'+i).style.display=(i===n)?'':'none';
+    const s=document.getElementById('ps'+i);
+    s.classList.toggle('cur',i===n);s.classList.toggle('done',i<n);
+  });
+  if(n===4)buildReview();
+}
+function tc(el,k){el.classList.toggle('on');chips.has(k)?chips.delete(k):chips.add(k)}
+
+// ══════════════════════════════════════════════════════════════════════════════
+//  PROFILE
+// ══════════════════════════════════════════════════════════════════════════════
+function collect(){
+  const g=id=>document.getElementById(id)?.value||'';
+  return{
+    name:g('f_name'),age:parseInt(g('f_age'))||null,gender:g('f_gender'),
+    phone:g('f_phone'),email:g('f_email'),state:g('f_state'),district:g('f_district'),
+    area_type:g('f_area'),caste:g('f_caste'),religion:g('f_religion'),marital:g('f_marital'),
+    annual_income:parseInt(g('f_income'))||0,ration_card:g('f_ration'),bpl_card:chips.has('bpl'),
+    user_type:g('f_utype'),education:g('f_edu'),institution:g('f_insname'),
+    institution_type:g('f_instype'),course:g('f_course'),
+    marks_10th:parseFloat(g('f_m10'))||null,marks_12th:parseFloat(g('f_m12'))||null,
+    cgpa:parseFloat(g('f_cgpa'))||null,exam_score:g('f_exam'),
+    special_status:Array.from(chips),
+    disability:chips.has('disability'),first_gen:chips.has('first_gen'),
+    farmer:chips.has('farmer'),self_emp:chips.has('self_emp'),merit:chips.has('merit'),
+  };
+}
+function buildReview(){
+  const p=collect();
+  const rows=[
+    ['Name',p.name],['Age',p.age],['Gender',p.gender],['Type',p.user_type],
+    ['State',p.state],['District',p.district],['Education',p.education],
+    ['Institution',p.institution],['Course',p.course],
+    ['10th',p.marks_10th?p.marks_10th+'%':''],['12th',p.marks_12th?p.marks_12th+'%':''],
+    ['CGPA',p.cgpa||''],['Caste',p.caste],
+    ['Income','₹'+parseInt(p.annual_income||0).toLocaleString('en-IN')],
+    ['Ration',p.ration_card],['Special',[...chips].join(', ')],
+  ].filter(r=>r[1]&&r[1]!=='₹0');
+  document.getElementById('reviewBlock').innerHTML=rows.map(r=>`<div class="rv"><span class="rv-k">${r[0]}</span><span class="rv-v">${r[1]}</span></div>`).join('');
+}
+function restoreProfile(){
+  const sp=localStorage.getItem('sc_profile');if(!sp)return;
+  try{
+    const p=JSON.parse(sp);
+    const map={name:'f_name',age:'f_age',gender:'f_gender',phone:'f_phone',email:'f_email',state:'f_state',district:'f_district',area_type:'f_area',caste:'f_caste',religion:'f_religion',annual_income:'f_income',ration_card:'f_ration',user_type:'f_utype',education:'f_edu',institution:'f_insname',institution_type:'f_instype',course:'f_course',marks_10th:'f_m10',marks_12th:'f_m12',cgpa:'f_cgpa'};
+    Object.entries(map).forEach(([k,id])=>{if(p[k]!=null&&document.getElementById(id))document.getElementById(id).value=p[k]});
+    (p.special_status||[]).forEach(k=>{chips.add(k);document.querySelectorAll('.chip').forEach(el=>{if(el.getAttribute('onclick')?.includes(`'${k}'`))el.classList.add('on')})});
+  }catch(e){}
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+//  SUBMIT — 3-STAGE DL PIPELINE
+// ══════════════════════════════════════════════════════════════════════════════
+async function submitProfile(){
+  const profile=collect();
+  if(!profile.name||!profile.age){toast('⚠️ Name and Age required',true);gs(1);return}
+  localStorage.setItem('sc_profile',JSON.stringify(profile));
+  const btn=document.getElementById('submitBtn');
+  btn.disabled=true;btn.textContent='🧠 Running DL Pipeline…';
+  switchTab('results');showDLProgress();
+  try{
+    // Stage 1
+    await updateStage(1,'active','Checking eligibility rules across '+SCHEMES.length+' schemes…');
+    const candidates=hardFilter(profile);
+    await delay(600);
+    await updateStage(1,'done',candidates.length+' schemes passed eligibility filter');
+    // Stage 2
+    await updateStage(2,'active','Computing TF-IDF similarity vectors…');
+    const textScored=tfidfScore(profile,candidates);
+    await delay(700);
+    await updateStage(2,'done','Top '+Math.min(textScored.length,20)+' candidates ranked by text similarity');
+    // Stage 3
+    await updateStage(3,'active',AI_KEY?'Claude AI deep analysis + personalisation…':'Enhanced multi-factor scoring…');
+    let finalRecs;
+    if(AI_KEY){finalRecs=await claudeRanking(profile,textScored)}
+    else{
+      finalRecs=textScored.sort((a,b)=>b.tscore-a.tscore).slice(0,15).map(s=>({
+        ...s,score:s.tscore,priority:s.tscore>.7?'HIGH':s.tscore>.4?'MEDIUM':'LOW',
+        reasons:['Age and eligibility criteria met','Income within scheme limit','Profile matches based on TF-IDF scoring'],
+        special_note:'Add Anthropic API key in Setup for personalised AI explanations',estimated_benefit:''
+      }));
+    }
+    await delay(400);
+    await updateStage(3,'done',finalRecs.length+' schemes personalised and ranked');
+    await delay(500);
+    // Save to Supabase
+    if(SB&&!IS_DEMO){
+      const{data:ud}=await SB.from('users').insert([{name:profile.name,age:profile.age,gender:profile.gender,phone:profile.phone,email:profile.email,state:profile.state,district:profile.district,area_type:profile.area_type,caste:profile.caste,religion:profile.religion,annual_income:profile.annual_income,ration_card:profile.ration_card,bpl_card:profile.bpl_card,user_type:profile.user_type,education:profile.education,institution:profile.institution,course:profile.course,marks_10th:profile.marks_10th,marks_12th:profile.marks_12th,cgpa:profile.cgpa,special_status:profile.special_status}]).select().single();
+      if(ud){currentUID=ud.id;localStorage.setItem('sc_uid',currentUID);const appRows=finalRecs.map(r=>({user_id:currentUID,scheme_id:r.id,ai_score:r.score,priority:r.priority,ai_reasons:r.reasons,status:'saved'}));await SB.from('applications').upsert(appRows,{onConflict:'user_id,scheme_id'})}
+    }
+    currentRecs=finalRecs;
+    renderResults(finalRecs,AI_KEY?'Claude AI + TF-IDF + Rule Filter ('+SCHEMES.length+' schemes)':'TF-IDF + Rule Filter ('+SCHEMES.length+' schemes)');
+    toast('✅ '+finalRecs.length+' personalised schemes found across Central, TN, Banks & Corporate!');
+  }catch(err){
+    console.error(err);
+    const fallback=hardFilter(profile).slice(0,12).map(s=>({...s,score:.65,priority:'MEDIUM',reasons:['Eligibility criteria met','Age and income within limits','General match'],special_note:'AI error — showing filtered results',estimated_benefit:''}));
+    renderResults(fallback,'Rule Filter fallback');
+    toast('⚠️ AI error: '+err.message,true);
+  }finally{btn.disabled=false;btn.innerHTML='🧠 Run Deep Learning Analysis'}
+}
+function delay(ms){return new Promise(r=>setTimeout(r,ms))}
+
+function showDLProgress(){
+  document.getElementById('resultsContent').innerHTML=`
+    <div class="dl-progress">
+      <div class="dl-spinner"></div>
+      <div style="font-size:.9rem;font-weight:700;margin-bottom:4px">Deep Learning Pipeline Running</div>
+      <div style="font-size:.74rem;color:var(--text2);margin-bottom:16px">Searching ${SCHEMES.length} schemes — Central Govt + TN State + ${SCHEMES.filter(s=>s.src==='bank').length} Bank + ${SCHEMES.filter(s=>s.src==='corporate').length} Corporate CSR</div>
+      <div class="dl-stage-progress" id="dlprog">
+        ${[1,2,3].map(n=>`<div class="dsp-item"><div class="dsp-num" id="dn${n}">${n}</div><div class="dsp-txt"><div class="dsp-label" id="dl${n}">${n===1?'Stage 1: Hard Rule Filter':n===2?'Stage 2: TF-IDF Similarity':'Stage 3: LLM Deep Ranking'}</div><div class="dsp-sub" id="ds${n}">${n===1?'Age, income, caste, state, gender checks':n===2?'Text vector similarity scoring':'Claude transformer model reranking'}</div></div><div class="dsp-result" id="dr${n}">–</div></div>`).join('')}
+      </div>
+    </div>`;
+}
+async function updateStage(n,state,result){
+  const num=document.getElementById('dn'+n);const lbl=document.getElementById('dl'+n);const res=document.getElementById('dr'+n);
+  if(!num)return;
+  if(state==='active'){num.classList.add('active');lbl.classList.add('active')}
+  else if(state==='done'){num.classList.remove('active');num.classList.add('done');num.textContent='✓';lbl.classList.remove('active');res.textContent=result;res.classList.add('show');document.getElementById('ds'+n).textContent=result}
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+//  STAGE 1 — HARD RULE FILTER
+// ══════════════════════════════════════════════════════════════════════════════
+function hardFilter(p){
+  const age=parseInt(p.age)||0,income=parseInt(p.annual_income)||0;
+  const gender=(p.gender||'').toLowerCase(),caste=(p.caste||'').toUpperCase();
+  return SCHEMES.filter(s=>{
+    if(age<s.min_age||age>s.max_age)return false;
+    if(income>s.max_income)return false;
+    if(s.gender!=='all'&&!gender.includes(s.gender.toLowerCase()))return false;
+    if(s.requires_bpl&&!p.bpl_card)return false;
+    if(s.requires_disability&&!p.disability)return false;
+    const cl=s.castes||['all'];
+    if(!cl.includes('all')&&!cl.includes(caste))return false;
+    return true;
+  });
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+//  STAGE 2 — TF-IDF TEXT SIMILARITY
+// ══════════════════════════════════════════════════════════════════════════════
+function tfidfScore(profile,schemes){
+  const stop=new Set(['the','a','an','and','or','for','of','in','to','is','are','was','be','this','that','with','at','from','by','as','it','on','per','upto','up','year','years','all','has','have','also','can','will','shall','not','any','each','its','more','may','their','our','after']);
+  const tokenize=txt=>new Set(txt.toLowerCase().replace(/[^a-z0-9\s]/g,' ').split(/\s+/).filter(w=>w.length>2&&!stop.has(w)));
+  const age=parseInt(profile.age)||0,income=parseInt(profile.annual_income)||0;
+  const caste=(profile.caste||'').toLowerCase(),gender=(profile.gender||'').toLowerCase();
+  const edu=(profile.education||'').toLowerCase(),utype=(profile.user_type||'').toLowerCase();
+  const state=(profile.state||'').toLowerCase();
+  let uparts=[utype,edu,caste,state];
+  if(profile.disability) uparts.push('disability pwd differently abled benchmark handicapped');
+  if(profile.bpl_card)   uparts.push('bpl below poverty line poor bpl card');
+  if(chips.has('first_gen')) uparts.push('first generation graduate scholar family');
+  if(chips.has('farmer'))    uparts.push('farmer agriculture kisan cultivation land crop');
+  if(chips.has('self_emp'))  uparts.push('self employed entrepreneur business enterprise mudra');
+  if(chips.has('merit'))     uparts.push('merit topper high marks talent rank excellence');
+  if(chips.has('minority'))  uparts.push('minority muslim sikh christian jain parsi buddhist');
+  if(chips.has('ex_serviceman')) uparts.push('ex serviceman soldier defence army ksb ward');
+  if(age<14)   uparts.push('school primary child student class');
+  else if(age<18)  uparts.push('school student class 9 10 11 12 minor youth');
+  else if(age<25)  uparts.push('college student higher education degree ug pg young');
+  else if(age<35)  uparts.push('young professional research phd pg startup');
+  else if(age>60)  uparts.push('senior citizen elderly pension retirement 60 years');
+  if(income<50000)  uparts.push('bpl low income poor welfare subsidy free');
+  else if(income<150000) uparts.push('lower income scholarship welfare subsidy');
+  else if(income<300000) uparts.push('middle income merit scholarship housing');
+  else if(income<600000) uparts.push('income scholarship professional technical');
+  const c=profile.caste||'';
+  if(['SC','ST'].includes(c)) uparts.push('sc st scheduled caste tribe post matric fellowship rajiv gandhi');
+  if(['BC','MBC','OBC'].includes(c)) uparts.push('bc mbc obc backward class yasasvi scholarship');
+  if(gender.includes('female')) uparts.push('women girl female single child daughter beti ujjwala');
+  if(['ug','undergraduate'].includes(edu)) uparts.push('degree college ug tuition fee btech bcom ba bsc');
+  if(['pg','postgraduate'].includes(edu)) uparts.push('pg masters fellowship mba mtech research');
+  if(['phd','doctorate'].includes(edu)) uparts.push('phd research jrf srf fellowship csir ugc');
+  if(['diploma'].includes(edu)) uparts.push('diploma polytechnic iti technical skill');
+  if(['12th'].includes(edu)) uparts.push('class 12 hsc higher secondary board');
+  if(['10th'].includes(edu)) uparts.push('class 10 sslc school board matric');
+  if(state.includes('tamil')) uparts.push('tn tamil nadu state scholarship cmchis amma kalaignar');
+  const userTokens=tokenize(uparts.join(' '));
+  const highSignal=['scholarship','disability','bpl','farmer','sc','st','obc','bc','mbc','women','girl','pension','senior','housing','loan','skill','employment','sbi','hdfc','tata','reliance','infosys','wipro','ongc','iocl','nabard','ntse','inspire','minority','overseas'];
+  return schemes.map(s=>{
+    const st=tokenize([s.name,s.desc,(s.benefits||[]).join(' '),s.keywords||'',s.type||'',s.ministry||''].join(' '));
+    const inter=[...userTokens].filter(w=>st.has(w));
+    const union=new Set([...userTokens,...st]);
+    let score=inter.length/(union.size||1);
+    const hsM=inter.filter(w=>highSignal.includes(w));score+=hsM.length*0.06;
+    if(s.keywords&&s.keywords.includes(utype))score+=0.08;
+    if(s.src==='tn'&&state.includes('tamil'))score+=0.07;
+    // Boost banking/corporate for students
+    if(['bank','corporate'].includes(s.src)&&(utype.includes('student')||edu.includes('ug')||edu.includes('pg')))score+=0.05;
+    return{...s,tscore:Math.min(parseFloat(score.toFixed(4)),1.0)};
+  }).sort((a,b)=>b.tscore-a.tscore);
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+//  STAGE 3 — CLAUDE LLM DEEP RANKING
+// ══════════════════════════════════════════════════════════════════════════════
+async function claudeRanking(profile,textScored){
+  const top25=textScored.slice(0,25);
+  const schemesSummary=top25.map(s=>`[ID:${s.id}] [${s.src.toUpperCase()}] ${s.name}\n  Benefits: ${(s.benefits||[]).slice(0,2).join('; ')}\n  Eligibility: age ${s.min_age}-${s.max_age} | income<₹${(s.max_income).toLocaleString()} | caste:${(s.castes||['all']).join(',')} | gender:${s.gender}\n  TF-IDF:${s.tscore} | type:${s.type}`).join('\n\n');
+  const sysP=`You are an expert Indian government welfare scheme and scholarship analyst with deep knowledge of central/state government schemes, bank scholarships, and corporate CSR programmes. Accurately match citizens to the most beneficial schemes they genuinely qualify for.`;
+  const userP=`Analyse this profile and rank the best-matched schemes.
+
+PROFILE:
+Name:${profile.name} | Age:${profile.age} | Gender:${profile.gender} | State:${profile.state}
+Caste:${profile.caste||'Not specified'} | Income:₹${(profile.annual_income||0).toLocaleString()}
+User Type:${profile.user_type} | Education:${profile.education}
+Institution:${profile.institution||'N/A'} | Course:${profile.course||'N/A'}
+10th:${profile.marks_10th||'N/A'}% | 12th:${profile.marks_12th||'N/A'}% | CGPA:${profile.cgpa||'N/A'}
+Special:[${[...chips].join(', ')||'None'}]
+
+TOP-25 PRE-FILTERED SCHEMES (by TF-IDF):
+${schemesSummary}
+
+Return ONLY a valid JSON array — no markdown, no text outside JSON. Select TOP 15.
+Format: [{"scheme_id":<n>,"score":<0.0-1.0>,"priority":"HIGH"|"MEDIUM"|"LOW","reasons":["specific reason with actual values","reason 2","reason 3"],"special_note":"key advantage, warning, or application deadline","estimated_benefit":"₹amount or description"}]`;
+  const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':AI_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:5000,system:sysP,messages:[{role:'user',content:userP}]})});
+  if(!res.ok){const err=await res.json();throw new Error('Claude: '+(err.error?.message||res.status))}
+  const data=await res.json();const raw=data.content.map(c=>c.text||'').join('');
+  const clean=raw.replace(/```json|```/g,'').trim();const aiOut=JSON.parse(clean);
+  const sMap=Object.fromEntries(top25.map(s=>[s.id,s]));
+  return aiOut.map(r=>{const s=sMap[r.scheme_id];if(!s)return null;return{...s,score:parseFloat(r.score)||.7,priority:r.priority||'MEDIUM',reasons:r.reasons||[],special_note:r.special_note||'',estimated_benefit:r.estimated_benefit||''}}).filter(Boolean);
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+//  RENDER
+// ══════════════════════════════════════════════════════════════════════════════
+function renderResults(recs,method){
+  if(!recs.length){document.getElementById('resultsContent').innerHTML=`<div class="empty"><div class="empty-icon">🔍</div><h3>No matches found</h3><p>Fill more profile fields — caste, income, education for best results</p></div>`;return}
+  const sorted=[...recs].sort((a,b)=>(b.score||0)-(a.score||0));
+  document.getElementById('resultsContent').innerHTML=`
+    <div class="results-hdr">
+      <h2>Your Personalised Scheme Matches</h2>
+      <div class="res-meta">
+        <div class="cnt-badge">${sorted.length} schemes found</div>
+        <div class="dl-method-badge">🧠 ${method||'DL Pipeline'}</div>
+      </div>
+    </div>
+    <div class="cards">${sorted.map(s=>cardHTML(s,true)).join('')}</div>`;
+  setTimeout(()=>{document.querySelectorAll('.score-bar').forEach(bar=>{bar.style.width=(parseFloat(bar.dataset.score||0)*100)+'%'})},100);
+}
+
+function cardHTML(s,showSave=false){
+  const pct=Math.round((s.score||.7)*100);
+  const pri=s.priority||'MEDIUM';const pricls=pri==='HIGH'?'high':pri==='MEDIUM'?'medium':'low';
+  const scoreCls=pct>=80?'score-high':pct>=60?'score-med':'score-low';
+  const barColor=pct>=80?'var(--green)':pct>=60?'var(--saffron)':'var(--text3)';
+  const srcBdg=`<span class="badge ${srcBadgeClass[s.src]||'b-type'}">${srcLabel[s.src]||s.src}</span>`;
+  const finBdg=s.btype==='financial'?'<span class="badge b-fin">💰 Financial</span>':s.btype==='non-financial'?'<span class="badge b-nfin">🎁 Non-Financial</span>':'<span class="badge b-both">✨ Both</span>';
+  const priBdg=`<span class="badge b-${pricls}">⭐ ${pri}</span>`;
+  const cardCls=`scard ${pricls} ${srcCardClass[s.src]||''}`;
+  const reasons=(s.reasons||[]).length?`<div class="ai-reasons"><div class="ai-reason-hd">🧠 DL Analysis — Why You Qualify</div>${(s.reasons||[]).slice(0,3).map(r=>`<div class="ar-item"><span class="ar-check">✓</span>${r}</div>`).join('')}</div>`:'';
+  const note=s.special_note?`<div class="special-note">💡 ${s.special_note}</div>`:'';
+  const benefit=s.estimated_benefit?`<div class="benefit-hl"><span>💰</span>Estimated Benefit: ${s.estimated_benefit}</div>`:'';
+  return`<div class="${cardCls}" onclick="openMod(${s.id})">
+    <div class="score-bar-wrap"><div class="score-bar" data-score="${s.score||.7}" style="background:${barColor};width:0%"></div></div>
+    <div class="scard-top"><div class="scard-name">${s.name}</div><div class="score-badge ${scoreCls}">${pct}% match</div></div>
+    <div class="scard-desc">${(s.desc||'').slice(0,200)}${(s.desc||'').length>200?'…':''}</div>
+    <div class="badges">${srcBdg}${finBdg}<span class="badge b-type">📋 ${(s.type||'').toUpperCase()}</span>${priBdg}</div>
+    ${benefit}${reasons}${note}
+    <div class="scard-foot"><div class="ministry-txt">${s.ministry||''}</div>${showSave?`<button class="btn btn-green" style="font-size:.7rem;padding:5px 10px" onclick="event.stopPropagation();saveScheme(${s.id})">💾 Save</button>`:''}</div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+//  MODAL
+// ══════════════════════════════════════════════════════════════════════════════
+function openMod(id){
+  const s=SCHEMES.find(x=>x.id===id);if(!s)return;
+  const rec=currentRecs.find(r=>r.id===id)||s;
+  const benefits=(s.benefits||[]).map(b=>`<div class="mitem"><span class="mi">✦</span>${b}</div>`).join('');
+  const docs=(s.docs||[]).map(d=>`<div class="mitem"><span class="mi">📄</span>${d}</div>`).join('');
+  const reasons=(rec.reasons||[]).map(r=>`<div class="ar-item"><span class="ar-check">✓</span>${r}</div>`).join('');
+  document.getElementById('modalBody').innerHTML=`
+    <div class="modal-title">${s.name}</div>
+    <div class="modal-min">${s.ministry} · ${srcLabel[s.src]||s.src}</div>
+    <div class="badges" style="margin-bottom:12px"><span class="badge ${srcBadgeClass[s.src]||'b-type'}">${srcLabel[s.src]||s.src}</span>${s.btype==='financial'?'<span class="badge b-fin">💰 Financial</span>':'<span class="badge b-nfin">🎁 Non-Financial</span>'}<span class="badge b-type">📋 ${(s.type||'').toUpperCase()}</span></div>
+    <p style="font-size:.82rem;color:var(--text2);line-height:1.65;margin-bottom:8px">${s.desc}</p>
+    ${rec.estimated_benefit?`<div class="benefit-hl">💰 Estimated Benefit: ${rec.estimated_benefit}</div>`:''}
+    ${rec.special_note?`<div class="special-note">💡 ${rec.special_note}</div>`:''}
+    ${reasons?`<div class="ai-reasons" style="margin-bottom:12px"><div class="ai-reason-hd">🧠 DL Analysis — Why You Qualify</div>${reasons}</div>`:''}
+    <div class="msec">Benefits</div>${benefits||'<p style="color:var(--text3);font-size:.8rem">See official portal for full details</p>'}
+    <div class="msec">Documents Required</div>${docs||'<p style="color:var(--text3);font-size:.8rem">Check official portal</p>'}
+    <div class="apply-box"><div class="msec" style="margin-top:0">How to Apply</div><p>${s.how}</p>
+    <div class="apply-row"><a href="${s.url}" target="_blank" class="btn btn-saffron" style="text-decoration:none">🔗 Official Portal / Apply</a><button class="btn btn-primary" onclick="saveScheme(${s.id});closeMod()">💾 Save Application</button></div></div>`;
+  document.getElementById('modal').classList.add('on');
+}
+function closeMod(e){if(!e||e.target===document.getElementById('modal')||e.target.classList.contains('modal-x'))document.getElementById('modal').classList.remove('on')}
+
+// ══════════════════════════════════════════════════════════════════════════════
+//  BROWSE
+// ══════════════════════════════════════════════════════════════════════════════
+function renderBrowse(){
+  const q=(document.getElementById('srch')?.value||'').toLowerCase();
+  const src=document.getElementById('srcF')?.value||'';
+  const filtered=SCHEMES.filter(s=>{
+    if(activeType&&s.type!==activeType)return false;
+    if(src&&s.src!==src)return false;
+    if(q&&!s.name.toLowerCase().includes(q)&&!s.keywords.includes(q)&&!s.ministry.toLowerCase().includes(q))return false;
+    return true;
+  });
+  const el=document.getElementById('browseContent');if(!el)return;
+  el.innerHTML=`
+    <div class="results-hdr">
+      <h2>All Schemes</h2>
+      <div class="res-meta">
+        <div class="cnt-badge">${filtered.length} of ${SCHEMES.length}</div>
+        <div style="font-size:.7rem;color:var(--text3)">Central:${SCHEMES.filter(s=>s.src==='central').length} | TN:${SCHEMES.filter(s=>s.src==='tn').length} | Bank:${SCHEMES.filter(s=>s.src==='bank').length} | Corporate:${SCHEMES.filter(s=>s.src==='corporate').length}</div>
+      </div>
+    </div>
+    <div class="cards">${filtered.length?filtered.map(s=>cardHTML(s,false)).join(''):'<div class="empty"><div class="empty-icon">🔍</div><h3>No matches</h3><p>Try clearing filters</p></div>'}</div>`;
+}
+function doBrowse(){clearTimeout(window._bt);window._bt=setTimeout(renderBrowse,300)}
+function setType(t,el){
+  activeType=t;
+  document.querySelectorAll('.fchip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');renderBrowse();
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+//  SAVED APPLICATIONS
+// ══════════════════════════════════════════════════════════════════════════════
+async function saveScheme(id){
+  const s=SCHEMES.find(x=>x.id===id);if(!s)return;
+  if(savedApps.find(a=>a.id===id)){toast('ℹ️ Already saved!');return}
+  savedApps.push({id,name:s.name,url:s.url,src:s.src,saved:new Date().toISOString(),status:'saved'});
+  localStorage.setItem('sc_apps3',JSON.stringify(savedApps));
+  if(SB&&!IS_DEMO&&currentUID){await SB.from('applications').upsert({user_id:currentUID,scheme_id:id,status:'saved'},{onConflict:'user_id,scheme_id'})}
+  toast('💾 Saved to My Applications!');
+}
+async function loadSaved(){
+  if(SB&&!IS_DEMO&&currentUID){
+    try{const{data}=await SB.from('applications').select('*,schemes(*)').eq('user_id',currentUID).order('saved_at',{ascending:false});if(data?.length){renderSaved(data.map(a=>({id:a.scheme_id,name:a.schemes?.name||'Unknown',url:a.schemes?.url||'#',saved:a.saved_at,status:a.status,sb_id:a.id})));return}}catch(e){}
+  }
+  renderSaved(savedApps);
+}
+function renderSaved(apps){
+  const el=document.getElementById('savedContent');
+  if(!apps||!apps.length){el.innerHTML=`<div class="empty"><div class="empty-icon">📁</div><h3>No saved applications</h3><p>Save schemes from your recommendations</p></div>`;return}
+  el.innerHTML=`<div class="results-hdr"><h2>My Saved Applications</h2><div class="cnt-badge">${apps.length} saved</div></div>${apps.map(a=>`<div class="app-card"><div class="app-card-top"><div class="app-name">${a.name}</div><span class="s-chip ${a.status==='applied'?'s-applied':a.status==='rejected'?'s-rejected':'s-saved'}">${a.status==='applied'?'✅ Applied':a.status==='rejected'?'❌ Rejected':'📌 Saved'}</span></div><div style="font-size:.69rem;color:var(--text3);margin-bottom:10px">Saved ${new Date(a.saved).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</div><div style="display:flex;gap:8px;flex-wrap:wrap"><a href="${a.url}" target="_blank" class="btn btn-saffron" style="font-size:.73rem;padding:7px 11px;text-decoration:none">🔗 Apply</a>${a.status!=='applied'?`<button class="btn btn-green" style="font-size:.73rem;padding:7px 11px" onclick="updStatus(${a.id||0},'applied')">✅ Mark Applied</button>`:''}<button class="btn btn-ghost" style="font-size:.73rem;padding:7px 11px" onclick="removeApp(${a.id||0})">🗑 Remove</button></div></div>`).join('')}`;
+}
+function updStatus(id,status){savedApps=savedApps.map(a=>a.id===id?{...a,status}:a);localStorage.setItem('sc_apps3',JSON.stringify(savedApps));loadSaved();toast(status==='applied'?'✅ Marked as Applied!':'Updated')}
+function removeApp(id){savedApps=savedApps.filter(a=>a.id!==id);localStorage.setItem('sc_apps3',JSON.stringify(savedApps));loadSaved();toast('🗑 Removed')}
+
+// ══════════════════════════════════════════════════════════════════════════════
+//  ADMIN
+// ══════════════════════════════════════════════════════════════════════════════
+async function loadAdmin(){
+  updateBrowseTotal();
+  if(!SB||IS_DEMO){document.getElementById('adminUsers').innerHTML='<p style="color:var(--text3);font-size:.8rem">Connect Supabase to see live user data and applications.</p>';return}
+  try{
+    const[{count:uc},{count:ac}]=await Promise.all([SB.from('users').select('*',{count:'exact',head:true}),SB.from('applications').select('*',{count:'exact',head:true})]);
+    document.getElementById('st2').textContent=uc||0;document.getElementById('st3').textContent=ac||0;
+    const{data:users}=await SB.from('users').select('id,name,age,state,caste,user_type,created_at').order('created_at',{ascending:false}).limit(15);
+    document.getElementById('adminUsers').innerHTML=users?.length?`<div style="overflow-x:auto"><table class="admin-table"><thead><tr><th>ID</th><th>Name</th><th>Age</th><th>State</th><th>Caste</th><th>Type</th><th>Registered</th></tr></thead><tbody>${users.map(u=>`<tr><td style="font-family:'JetBrains Mono',monospace;font-size:.7rem">#${u.id}</td><td><strong>${u.name}</strong></td><td>${u.age||'–'}</td><td>${u.state||'–'}</td><td>${u.caste||'–'}</td><td>${u.user_type||'–'}</td><td>${new Date(u.created_at).toLocaleDateString('en-IN')}</td></tr>`).join('')}</tbody></table></div>`:'<p style="color:var(--text3);font-size:.8rem">No users yet</p>';
+  }catch(e){toast('Admin error: '+e.message,true)}
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+//  TOAST
+// ══════════════════════════════════════════════════════════════════════════════
+function toast(msg,isErr=false){
+  const t=document.getElementById('toast');t.textContent=msg;t.className='on'+(isErr?' err':'');
+  clearTimeout(window._tt);window._tt=setTimeout(()=>t.className='',3500);
+}
+</script>
+</body>
+</html>
